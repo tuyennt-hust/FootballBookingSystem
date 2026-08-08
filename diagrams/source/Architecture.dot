@@ -1,0 +1,23 @@
+digraph Architecture {
+  graph [rankdir=TB, bgcolor="white", pad="0.45", nodesep="0.55", ranksep="0.65", fontname="DejaVu Sans"];
+  node [shape=box, style="rounded,filled", fontname="DejaVu Sans", fontsize=12, margin="0.18,0.12", color="#bdd5c6", fillcolor="#f6fbf8"];
+  edge [fontname="DejaVu Sans", fontsize=10, color="#416554", arrowsize=0.8];
+
+  browser [label="Trình duyệt\nEJS + HTML/CSS + JS", fillcolor="#e7f7ed", width=2.8];
+  routes [label="Routes\nWeb routes + /api", fillcolor="#ddf3e5", width=2.8];
+  middleware [label="Middlewares\nSession • Auth/RBAC • CSRF\nSecurity headers • Upload • Error", fillcolor="#fff7da", color="#d7bd5d", width=3.5];
+  controller [label="Controllers\nNhận request / trả response", width=3.1];
+  service [label="Services\nValidation + Business Logic", width=3.1];
+  repository [label="Repositories\nParameterized SQL + Transaction", width=3.1];
+  postgres [label="PostgreSQL\nTables • Functions • Triggers • Views", shape=cylinder, fillcolor="#dcecf9", color="#7ca4c2", width=3.2];
+  upload [label="public/uploads/pitches\nẢnh sân runtime", shape=folder, fillcolor="#f3ecff", color="#aa8ac5"];
+
+  browser -> routes [label="HTTP request"];
+  routes -> middleware [label="guard / middleware chain"];
+  middleware -> controller;
+  controller -> service;
+  service -> repository;
+  repository -> postgres [label="pg"];
+  controller -> browser [label="render EJS / JSON", style=dashed, constraint=false];
+  middleware -> upload [label="Multer", style=dashed, constraint=false];
+}

@@ -1,0 +1,100 @@
+<section class="page-hero page-hero-compact booking-history-hero">
+  <div class="container page-hero-inner">
+    <div>
+      <span class="section-kicker section-kicker-light">Khu vực khách hàng</span>
+      <h1>Lịch sử đặt sân</h1>
+      <p>Theo dõi trạng thái, hóa đơn và thời gian của từng đơn đặt sân.</p>
+    </div>
+    <div class="page-hero-icon" aria-hidden="true">▤</div>
+  </div>
+</section>
+
+<section class="section booking-history-section">
+  <div class="container">
+    <div class="booking-history-toolbar">
+      <div>
+        <span class="section-kicker">Đơn của tôi</span>
+        <h2><%= pagination.totalItems %> đơn đặt sân</h2>
+      </div>
+      <a class="button button-primary" href="/san-bong">Đặt sân mới</a>
+    </div>
+
+    <nav class="booking-status-tabs" aria-label="Lọc trạng thái đơn">
+      <% statusTabs.forEach((tab) => { %>
+        <a
+          class="<%= filters.status === tab.key ? 'active' : '' %>"
+          href="/lich-su-dat-san?status=<%= encodeURIComponent(tab.key) %>"
+        ><%= tab.label %></a>
+      <% }) %>
+    </nav>
+
+    <% if (!bookings.length) { %>
+      <div class="empty-booking-state">
+        <div class="empty-booking-icon" aria-hidden="true">⚽</div>
+        <h2>Chưa có đơn phù hợp</h2>
+        <p>Không có đơn đặt sân trong nhóm trạng thái này.</p>
+        <a class="button button-primary" href="/san-bong">Tìm sân ngay</a>
+      </div>
+    <% } else { %>
+      <div class="booking-history-list">
+        <% bookings.forEach((booking) => { %>
+          <article class="booking-history-card">
+            <a class="booking-history-media" href="/dat-san/<%= encodeURIComponent(booking.ma_dat_san) %>">
+              <img src="<%= booking.imageUrl %>" alt="Ảnh minh họa <%= booking.ten_san %>">
+            </a>
+
+            <div class="booking-history-content">
+              <div class="booking-history-heading">
+                <div>
+                  <span class="booking-code"><%= booking.ma_dat_san %></span>
+                  <h3><a href="/dat-san/<%= encodeURIComponent(booking.ma_dat_san) %>"><%= booking.ten_san %></a></h3>
+                  <p><%= booking.dia_chi || booking.ten_khu_vuc %>, <%= booking.quan_huyen %></p>
+                </div>
+                <span class="booking-status-badge <%= booking.bookingStatus.className %>"><%= booking.bookingStatus.label %></span>
+              </div>
+
+              <div class="booking-history-facts">
+                <div>
+                  <span>Ngày đặt</span>
+                  <strong><%= booking.ngay_dat_label %></strong>
+                </div>
+                <div>
+                  <span>Khung giờ</span>
+                  <strong><%= booking.timeLabel %></strong>
+                </div>
+                <div>
+                  <span>Thanh toán</span>
+                  <strong class="<%= booking.paymentStatus.className %>"><%= booking.paymentStatus.label %></strong>
+                </div>
+                <div>
+                  <span>Tổng tiền</span>
+                  <strong><%= formatMoney(booking.tong_tien) %></strong>
+                </div>
+              </div>
+            </div>
+
+            <div class="booking-history-actions">
+              <a class="button button-outline button-block" href="/dat-san/<%= encodeURIComponent(booking.ma_dat_san) %>">Xem chi tiết</a>
+              <% if (booking.canCancel) { %>
+                <form action="/dat-san/<%= encodeURIComponent(booking.ma_dat_san) %>/huy" method="post" data-confirm="Bạn chắc chắn muốn hủy đơn <%= booking.ma_dat_san %>?">
+                  <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                  <button class="button button-danger-soft button-block" type="submit">Hủy đơn</button>
+                </form>
+              <% } %>
+            </div>
+          </article>
+        <% }) %>
+      </div>
+
+      <% if (pagination.totalPages > 1) { %>
+        <nav class="pagination" aria-label="Phân trang lịch sử đặt sân">
+          <% const previousPage = Math.max(1, pagination.page - 1); %>
+          <% const nextPage = Math.min(pagination.totalPages, pagination.page + 1); %>
+          <a class="pagination-link <%= pagination.page === 1 ? 'disabled' : '' %>" href="/lich-su-dat-san?status=<%= encodeURIComponent(filters.status) %>&page=<%= previousPage %>">← Trước</a>
+          <span class="pagination-current">Trang <%= pagination.page %> / <%= pagination.totalPages %></span>
+          <a class="pagination-link <%= pagination.page === pagination.totalPages ? 'disabled' : '' %>" href="/lich-su-dat-san?status=<%= encodeURIComponent(filters.status) %>&page=<%= nextPage %>">Sau →</a>
+        </nav>
+      <% } %>
+    <% } %>
+  </div>
+</section>

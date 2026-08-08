@@ -1,0 +1,14 @@
+<section class="error-page">
+  <div class="container error-card">
+    <strong><%= status %></strong>
+    <h1>Hệ thống gặp sự cố</h1>
+    <p><%= message %></p>
+    <a class="button button-primary" href="/">Quay về trang chủ</a>
+    <% if (stack) { %>
+      <details class="error-details">
+        <summary>Chi tiết dành cho môi trường phát triển</summary>
+        <pre><%= stack %></pre>
+      </details>
+    <% } %>
+  </div>
+</section>

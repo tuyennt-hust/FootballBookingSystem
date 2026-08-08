@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1450" viewBox="0 0 1800 1450">
+<rect width="100%" height="100%" fill="white"/>
+<style>text{font-family:"DejaVu Sans",Arial,sans-serif;fill:#17352a}.title{font-size:34px;font-weight:700}.p{font-size:19px;font-weight:700}.m{font-size:16px}.small{font-size:14px}.box{fill:#eaf7ef;stroke:#65a57e;stroke-width:2}.db{fill:#e8f2fb;stroke:#6d9abc;stroke-width:2}.life{stroke:#9bb6a7;stroke-width:2;stroke-dasharray:7 7}.arrow{stroke:#2f6550;stroke-width:2.4;fill:none}.return{stroke:#628173;stroke-width:2;stroke-dasharray:7 6;fill:none}.note{fill:#fff7dc;stroke:#d7b64e;stroke-width:1.8}.alt{fill:#fffaf0;stroke:#dfc66e;stroke-width:1.5;stroke-dasharray:7 5}</style>
+<defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,6 L9,3 z" fill="#2f6550"/></marker><marker id="arrow2" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,6 L9,3 z" fill="#628173"/></marker></defs>
+<text x="900" y="52" text-anchor="middle" class="title">Sequence Diagram - Luồng đặt sân</text>
+<rect x="35" y="82" width="210" height="68" rx="16" class="box"/>
+<text x="140" y="123" text-anchor="middle" class="p">Khách hàng</text>
+<line x1="140" y1="150" x2="140" y2="1380" class="life"/>
+<rect x="315" y="82" width="210" height="68" rx="16" class="box"/>
+<text x="420" y="123" text-anchor="middle" class="p">Browser / EJS</text>
+<line x1="420" y1="150" x2="420" y2="1380" class="life"/>
+<rect x="595" y="82" width="210" height="68" rx="16" class="box"/>
+<text x="700" y="123" text-anchor="middle" class="p">BookingController</text>
+<line x1="700" y1="150" x2="700" y2="1380" class="life"/>
+<rect x="875" y="82" width="210" height="68" rx="16" class="box"/>
+<text x="980" y="123" text-anchor="middle" class="p">BookingService</text>
+<line x1="980" y1="150" x2="980" y2="1380" class="life"/>
+<rect x="1155" y="82" width="210" height="68" rx="16" class="box"/>
+<text x="1260" y="123" text-anchor="middle" class="p">BookingRepository</text>
+<line x1="1260" y1="150" x2="1260" y2="1380" class="life"/>
+<rect x="1435" y="82" width="210" height="68" rx="16" class="db"/>
+<text x="1540" y="123" text-anchor="middle" class="p">PostgreSQL</text>
+<line x1="1540" y1="150" x2="1540" y2="1380" class="life"/>
+<line x1="140" y1="205" x2="420" y2="205" class="arrow" marker-end="url(#arrow)"/>
+<rect x="90.0" y="176" width="380" height="25" fill="white" opacity="0.94"/>
+<text x="280.0" y="194" text-anchor="middle" class="m">1. Chọn sân, ngày và khung giờ</text>
+<line x1="420" y1="265" x2="700" y2="265" class="arrow" marker-end="url(#arrow)"/>
+<rect x="370.0" y="236" width="380" height="25" fill="white" opacity="0.94"/>
+<text x="560.0" y="254" text-anchor="middle" class="m">2. GET /san-bong/:id?date=...</text>
+<line x1="700" y1="325" x2="980" y2="325" class="arrow" marker-end="url(#arrow)"/>
+<rect x="650.0" y="296" width="380" height="25" fill="white" opacity="0.94"/>
+<text x="840.0" y="314" text-anchor="middle" class="m">3. getPublicPitchDetail()</text>
+<line x1="980" y1="385" x2="1260" y2="385" class="arrow" marker-end="url(#arrow)"/>
+<rect x="930.0" y="356" width="380" height="25" fill="white" opacity="0.94"/>
+<text x="1120.0" y="374" text-anchor="middle" class="m">4. findAvailability()</text>
+<line x1="1260" y1="445" x2="1540" y2="445" class="arrow" marker-end="url(#arrow)"/>
+<rect x="1210.0" y="416" width="380" height="25" fill="white" opacity="0.94"/>
+<text x="1400.0" y="434" text-anchor="middle" class="m">5. SELECT khung giờ + NOT EXISTS dat_san</text>
+<line x1="1540" y1="505" x2="1260" y2="505" class="return" marker-end="url(#arrow2)"/>
+<rect x="1210.0" y="476" width="380" height="25" fill="white" opacity="0.94"/>
+<text x="1400.0" y="494" text-anchor="middle" class="m">6. Danh sách slot + giá ca</text>
+<line x1="1260" y1="565" x2="980" y2="565" class="return" marker-end="url(#arrow2)"/>
+<rect x="930.0" y="536" width="380" height="25" fill="white" opacity="0.94"/>
+<text x="1120.0" y="554" text-anchor="middle" class="m">7. availability</text>
+<line x1="980" y1="625" x2="700" y2="625" class="return" marker-end="url(#arrow2)"/>
+<rect x="650.0" y="596" width="380" height="25" fill="white" opacity="0.94"/>
+<text x="840.0" y="614" text-anchor="middle" class="m">8. dữ liệu chi tiết sân</text>
+<line x1="700" y1="685" x2="420" y2="685" class="return" marker-end="url(#arrow2)"/>
+<rect x="370.0" y="656" width="380" height="25" fill="white" opacity="0.94"/>
+<text x="560.0" y="674" text-anchor="middle" class="m">9. Render EJS</text>
+<rect x="55" y="725" width="1690" height="560" rx="18" class="alt"/>
+<text x="78" y="758" class="p">Tạo booking</text>
+<line x1="420" y1="805" x2="700" y2="805" class="arrow" marker-end="url(#arrow)"/>
+<rect x="370.0" y="776" width="380" height="25" fill="white" opacity="0.94"/>
+<text x="560.0" y="794" text-anchor="middle" class="m">10. POST /dat-san + CSRF</text>
+<line x1="700" y1="865" x2="980" y2="865" class="arrow" marker-end="url(#arrow)"/>
+<rect x="650.0" y="836" width="380" height="25" fill="white" opacity="0.94"/>
+<text x="840.0" y="854" text-anchor="middle" class="m">11. createBooking(user, payload)</text>
+<line x1="980" y1="925" x2="1260" y2="925" class="arrow" marker-end="url(#arrow)"/>
+<rect x="930.0" y="896" width="380" height="25" fill="white" opacity="0.94"/>
+<text x="1120.0" y="914" text-anchor="middle" class="m">12. createBookingTransactional(...)</text>
+<line x1="1260" y1="985" x2="1540" y2="985" class="arrow" marker-end="url(#arrow)"/>
+<rect x="1210.0" y="956" width="380" height="25" fill="white" opacity="0.94"/>
+<text x="1400.0" y="974" text-anchor="middle" class="m">13. BEGIN + advisory lock(slot)</text>
+<line x1="1260" y1="1045" x2="1540" y2="1045" class="arrow" marker-end="url(#arrow)"/>
+<rect x="1210.0" y="1016" width="380" height="25" fill="white" opacity="0.94"/>
+<text x="1400.0" y="1034" text-anchor="middle" class="m">14. SELECT fn_dat_san_bong(...)</text>
+<path d="M 1540 1095 h 105 v 42 h -105" class="arrow" marker-end="url(#arrow)"/>
+<text x="1655" y="1113" class="small">Trigger kiểm tra trùng lịch</text>
+<path d="M 1540 1155 h 105 v 42 h -105" class="arrow" marker-end="url(#arrow)"/>
+<text x="1655" y="1173" class="small">Trigger tính tiền sân + tạo hóa đơn</text>
+<line x1="1540" y1="1230" x2="1260" y2="1230" class="return" marker-end="url(#arrow2)"/>
+<rect x="1210.0" y="1201" width="380" height="25" fill="white" opacity="0.94"/>
+<text x="1400.0" y="1219" text-anchor="middle" class="m">15. ma_dat_san / lỗi xung đột</text>
+<line x1="1260" y1="1285" x2="1540" y2="1285" class="arrow" marker-end="url(#arrow)"/>
+<rect x="1210.0" y="1256" width="380" height="25" fill="white" opacity="0.94"/>
+<text x="1400.0" y="1274" text-anchor="middle" class="m">16. COMMIT nếu thành công</text>
+<line x1="1260" y1="1340" x2="980" y2="1340" class="return" marker-end="url(#arrow2)"/>
+<rect x="930.0" y="1311" width="380" height="25" fill="white" opacity="0.94"/>
+<text x="1120.0" y="1329" text-anchor="middle" class="m">17. Booking đã tạo</text>
+<line x1="980" y1="1395" x2="700" y2="1395" class="return" marker-end="url(#arrow2)"/>
+<rect x="650.0" y="1366" width="380" height="25" fill="white" opacity="0.94"/>
+<text x="840.0" y="1384" text-anchor="middle" class="m">18. Kết quả</text>
+</svg>

@@ -1,0 +1,36 @@
+<article class="pitch-card">
+  <a class="pitch-card-media" href="/san-bong/<%= encodeURIComponent(pitch.ma_san) %>" aria-label="Xem chi tiết <%= pitch.ten_san %>">
+    <img src="<%= pitch.imageUrl %>" alt="Ảnh minh họa <%= pitch.ten_san %>" loading="lazy">
+    <span class="status-badge status-active">Đang hoạt động</span>
+  </a>
+
+  <div class="pitch-card-body">
+    <div class="pitch-card-heading">
+      <div>
+        <p class="eyebrow"><%= pitch.loai_san %></p>
+        <h3><a href="/san-bong/<%= encodeURIComponent(pitch.ma_san) %>"><%= pitch.ten_san %></a></h3>
+      </div>
+      <strong class="pitch-price"><%= formatMoney(pitch.gia_thue) %><small>/ca thường</small></strong>
+    </div>
+
+    <ul class="pitch-meta">
+      <li>
+        <span aria-hidden="true">⌖</span>
+        <span><%= pitch.dia_chi || pitch.ten_khu_vuc %>, <%= pitch.quan_huyen %></span>
+      </li>
+      <li>
+        <span aria-hidden="true">◉</span>
+        <span><%= pitch.ten_khu_vuc %></span>
+      </li>
+      <li>
+        <span aria-hidden="true">♙</span>
+        <span>Chủ sân: <%= pitch.ten_chu_san %></span>
+      </li>
+    </ul>
+
+    <div class="pitch-card-actions">
+      <a class="button button-outline button-block" href="/san-bong?area=<%= encodeURIComponent(pitch.ma_khu_vuc) %>">Cùng khu vực</a>
+      <a class="button button-primary button-block" href="/san-bong/<%= encodeURIComponent(pitch.ma_san) %>">Xem chi tiết</a>
+    </div>
+  </div>
+</article>

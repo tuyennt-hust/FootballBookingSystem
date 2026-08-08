@@ -1,0 +1,33 @@
+digraph UseCase {
+  graph [rankdir=LR, bgcolor="white", pad="0.4", nodesep="0.45", ranksep="1.0", fontname="DejaVu Sans"];
+  node [fontname="DejaVu Sans", fontsize=11];
+  edge [color="#557367", arrowsize=0.6];
+
+  customer [shape=plaintext, label="👤 Khách hàng"];
+  owner [shape=plaintext, label="👤 Chủ sân"];
+  admin [shape=plaintext, label="👤 Admin"];
+
+  subgraph cluster_system {
+    label="FootballBookingSystem";
+    color="#c8ddd0";
+    style="rounded";
+    bgcolor="#fbfefc";
+
+    login [shape=ellipse, style=filled, fillcolor="#ecf8f0", label="Đăng nhập / đăng xuất"];
+    search [shape=ellipse, style=filled, fillcolor="#ecf8f0", label="Tìm & xem sân"];
+    book [shape=ellipse, style=filled, fillcolor="#ecf8f0", label="Đặt / hủy sân"];
+    service [shape=ellipse, style=filled, fillcolor="#ecf8f0", label="Chọn dịch vụ"];
+    pay [shape=ellipse, style=filled, fillcolor="#ecf8f0", label="Thanh toán"];
+    ownerPitch [shape=ellipse, style=filled, fillcolor="#f4f8ec", label="Quản lý sân & ảnh"];
+    ownerBooking [shape=ellipse, style=filled, fillcolor="#f4f8ec", label="Xác nhận đơn"];
+    ownerDash [shape=ellipse, style=filled, fillcolor="#f4f8ec", label="Theo dõi doanh thu"];
+    accounts [shape=ellipse, style=filled, fillcolor="#fff5e5", label="Quản lý tài khoản"];
+    areas [shape=ellipse, style=filled, fillcolor="#fff5e5", label="Quản lý khu vực"];
+    monitor [shape=ellipse, style=filled, fillcolor="#fff5e5", label="Theo dõi sân / đơn / hóa đơn"];
+    report [shape=ellipse, style=filled, fillcolor="#fff5e5", label="Xem báo cáo thống kê"];
+  }
+
+  customer -> login; customer -> search; customer -> book; customer -> service; customer -> pay;
+  owner -> login; owner -> ownerPitch; owner -> ownerBooking; owner -> ownerDash;
+  admin -> login; admin -> accounts; admin -> areas; admin -> monitor; admin -> report;
+}

@@ -1,0 +1,71 @@
+<section class="page-hero page-hero-compact owner-hero">
+  <div class="container page-hero-inner">
+    <div>
+      <span class="section-kicker section-kicker-light">Quản lý sân bóng</span>
+      <h1>Sân thuộc <%= owner.fullName %></h1>
+      <p>Mỗi thao tác đều được giới hạn theo mã chủ sân đang đăng nhập.</p>
+    </div>
+    <a class="button button-light" href="/chu-san/san-bong/them">+ Thêm sân mới</a>
+  </div>
+</section>
+
+<section class="section owner-pitch-section">
+  <div class="container">
+    <div class="owner-subnav">
+      <a href="/chu-san">Tổng quan</a>
+      <a class="active" href="/chu-san/san-bong">Sân bóng</a>
+      <a href="/chu-san/don-dat-san">Đơn đặt sân</a>
+    </div>
+
+    <% if (pitches.length === 0) { %>
+      <div class="empty-state">
+        <strong>Bạn chưa có sân bóng</strong>
+        <p>Hãy tạo sân đầu tiên để khách hàng có thể tìm và đặt lịch.</p>
+        <a class="button button-primary" href="/chu-san/san-bong/them">Thêm sân mới</a>
+      </div>
+    <% } else { %>
+      <div class="owner-pitch-grid">
+        <% pitches.forEach((pitch) => { %>
+          <article class="owner-pitch-card">
+            <div class="owner-pitch-media">
+              <img src="<%= pitch.imageUrl %>" alt="Ảnh <%= pitch.ten_san %>">
+              <span class="status-badge <%= pitch.statusMeta.className %>"><%= pitch.statusMeta.label %></span>
+            </div>
+            <div class="owner-pitch-body">
+              <div class="owner-pitch-heading">
+                <div>
+                  <span class="section-kicker"><%= pitch.ma_san %> · <%= pitch.loai_san %></span>
+                  <h2><%= pitch.ten_san %></h2>
+                </div>
+                <strong><%= formatMoney(pitch.gia_thue) %></strong>
+              </div>
+              <p>⌖ <%= pitch.dia_chi %>, <%= pitch.quan_huyen %></p>
+              <div class="owner-pitch-metrics">
+                <div><span>Đơn sắp tới</span><strong><%= pitch.so_don_sap_toi %></strong></div>
+                <div><span>Chờ xác nhận</span><strong><%= pitch.so_don_cho_xac_nhan %></strong></div>
+              </div>
+              <div class="owner-pitch-actions">
+                <a class="button button-outline" href="/chu-san/san-bong/<%= encodeURIComponent(pitch.ma_san) %>/chinh-sua">Chỉnh sửa</a>
+                <% if (pitch.trang_thai === 'Hoat dong') { %>
+                  <a class="button button-ghost" href="/san-bong/<%= encodeURIComponent(pitch.ma_san) %>" target="_blank" rel="noopener">Xem công khai</a>
+                <% } %>
+              </div>
+              <form class="owner-status-form" action="/chu-san/san-bong/<%= encodeURIComponent(pitch.ma_san) %>/trang-thai" method="post">
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                <label for="status-<%= pitch.ma_san %>">Trạng thái vận hành</label>
+                <div>
+                  <select id="status-<%= pitch.ma_san %>" name="status">
+                    <option value="Hoat dong" <%= pitch.trang_thai === 'Hoat dong' ? 'selected' : '' %>>Hoạt động</option>
+                    <option value="Bao tri" <%= pitch.trang_thai === 'Bao tri' ? 'selected' : '' %>>Bảo trì</option>
+                    <option value="Ngung hoat dong" <%= pitch.trang_thai === 'Ngung hoat dong' ? 'selected' : '' %>>Ngừng hoạt động</option>
+                  </select>
+                  <button class="button button-primary" type="submit">Cập nhật</button>
+                </div>
+              </form>
+            </div>
+          </article>
+        <% }) %>
+      </div>
+    <% } %>
+  </div>
+</section>

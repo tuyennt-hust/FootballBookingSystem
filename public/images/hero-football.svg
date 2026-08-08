@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 620" role="img" aria-labelledby="title desc">
+  <title id="title">Sân bóng minh họa</title>
+  <desc id="desc">Minh họa người chơi bóng trên sân cỏ</desc>
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop stop-color="#effff5"/>
+      <stop offset="1" stop-color="#c7f9d9"/>
+    </linearGradient>
+    <linearGradient id="field" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#22a866"/>
+      <stop offset="1" stop-color="#0b5a35"/>
+    </linearGradient>
+  </defs>
+  <rect x="46" y="48" width="628" height="520" rx="52" fill="url(#sky)"/>
+  <ellipse cx="360" cy="486" rx="270" ry="72" fill="#0b3d25" opacity=".14"/>
+  <path d="M95 450c60-122 169-185 281-176 98 8 180 70 249 176l-53 84H145l-50-84Z" fill="url(#field)"/>
+  <path d="M176 468h368M360 303v231M360 403c46 0 83 30 83 67s-37 66-83 66-83-29-83-66 37-67 83-67Z" fill="none" stroke="#fff" stroke-width="8" opacity=".85"/>
+  <path d="M111 455h85v72h-55M609 455h-85v72h55" fill="none" stroke="#fff" stroke-width="7" opacity=".85"/>
+  <circle cx="364" cy="450" r="28" fill="#fff"/>
+  <path d="m364 431 12 9-5 14h-14l-5-14 12-9Zm-12 9-13 3-4 13 10 8 12-10-5-14Zm24 0 13 3 4 13-10 8-12-10 5-14Zm-31 24 4 14 13 4 2-15-7-13-12 10Zm38 0-4 14-13 4-2-15 7-13 12 10Z" fill="#0f5132"/>
+  <circle cx="189" cy="230" r="46" fill="#f4b183"/>
+  <path d="M144 228c8-61 83-76 103-18 3 10 2 25-3 40l-19-20-14-45-16 35-51 8Z" fill="#173d2a"/>
+  <path d="M146 278c21-34 70-36 94 0l25 87-57 19-67-25 5-81Z" fill="#fff"/>
+  <path d="m165 290 42 40 34-41 20 65-55 22-62-23 21-63Z" fill="#146c43"/>
+  <path d="m155 356-22 107 31 5 36-88-45-24Zm85 8 45 95-28 17-58-97 41-15Z" fill="#123c27"/>
+  <path d="m132 461-24 35c-7 10 5 19 15 14l44-31-3-11-32-7Zm154-4 32 29c10 9 1 21-11 18l-49-26-1-12 29-9Z" fill="#fff"/>
+  <path d="m148 287-62 79 22 19 70-61-30-37Zm89 1 72 56-18 24-77-45 23-35Z" fill="#f4b183"/>
+  <circle cx="491" cy="170" r="45" fill="#e9a97c"/>
+  <path d="M450 166c10-55 77-65 94-13 4 12 3 26-2 40l-20-21-13-35-16 29-43 0Z" fill="#173d2a"/>
+  <path d="M453 215c18-30 64-31 84-2l35 83-55 26-71-20 7-87Z" fill="#fde68a"/>
+  <path d="m471 224 38 35 29-36 28 61-52 29-61-19 18-70Z" fill="#0f5132"/>
+  <path d="m462 298-8 99 31 2 20-80-43-21Zm72 6 49 79-26 18-63-83 40-14Z" fill="#173d2a"/>
+  <path d="m453 394-18 40c-5 11 7 18 17 12l37-37-4-10-32-5Zm131-14 35 20c11 7 5 20-8 20l-53-17-1-12 27-11Z" fill="#fff"/>
+  <path d="m455 226-61 53 17 22 69-40-25-35Zm82-8 69 42-14 27-75-32 20-37Z" fill="#e9a97c"/>
+  <circle cx="104" cy="105" r="18" fill="#bef264"/>
+  <circle cx="601" cy="93" r="11" fill="#22a866" opacity=".5"/>
+  <path d="M83 164h72M565 129h66" stroke="#22a866" stroke-width="8" stroke-linecap="round" opacity=".24"/>
+</svg>

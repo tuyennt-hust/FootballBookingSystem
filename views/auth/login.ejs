@@ -1,0 +1,87 @@
+<section class="auth-section">
+  <div class="container auth-grid">
+    <div class="auth-panel">
+      <div class="auth-heading">
+        <span class="section-kicker">Chào mừng trở lại</span>
+        <h1>Đăng nhập tài khoản</h1>
+        <p>Đăng nhập để quản lý lịch đặt sân và tiếp tục các chức năng dành cho tài khoản của bạn.</p>
+      </div>
+
+      <% if (formNotice) { %>
+        <div class="alert alert-info auth-alert" role="status">
+          <span class="alert-icon" aria-hidden="true">i</span>
+          <span><%= formNotice %></span>
+        </div>
+      <% } %>
+
+      <% if (formError) { %>
+        <div class="alert alert-error auth-alert" role="alert">
+          <span class="alert-icon" aria-hidden="true">!</span>
+          <span><%= formError %></span>
+        </div>
+      <% } %>
+
+      <form class="auth-form" action="/dang-nhap" method="post" novalidate>
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+        <input type="hidden" name="next" value="<%= formData.next || '' %>">
+
+        <div class="form-field">
+          <label for="username">Tên đăng nhập</label>
+          <input
+            id="username"
+            name="username"
+            type="text"
+            value="<%= formData.username %>"
+            autocomplete="username"
+            maxlength="50"
+            required
+            autofocus
+            placeholder="Ví dụ: khach01"
+          >
+        </div>
+
+        <div class="form-field">
+          <label for="password">Mật khẩu</label>
+          <div class="password-field">
+            <input
+              id="password"
+              name="password"
+              type="password"
+              autocomplete="current-password"
+              minlength="6"
+              required
+              placeholder="Nhập mật khẩu"
+            >
+            <button type="button" data-password-toggle="password" aria-label="Hiện mật khẩu">Hiện</button>
+          </div>
+        </div>
+
+        <button class="button button-primary button-block auth-submit" type="submit">
+          Đăng nhập
+        </button>
+      </form>
+
+      <p class="auth-switch">
+        Chưa có tài khoản?
+        <a href="/dang-ky">Đăng ký khách hàng</a>
+      </p>
+
+      <div class="demo-account">
+        <strong>Tài khoản kiểm thử</strong>
+        <span>Khách hàng: <code>khach01</code> / <code>123456</code></span>
+        <span>Chủ sân: <code>chusan01</code> / <code>123456</code></span>
+        <span>Quản trị viên: <code>admin</code> / <code>123456</code></span>
+      </div>
+    </div>
+
+    <aside class="auth-side" aria-label="Lợi ích khi đăng nhập">
+      <span class="auth-side-badge">⚽ Football Booking</span>
+      <h2>Một tài khoản, quản lý toàn bộ hành trình đặt sân.</h2>
+      <ul>
+        <li><span>01</span> Theo dõi lịch đặt sân của bạn</li>
+        <li><span>02</span> Quản lý trạng thái xác nhận và thanh toán</li>
+        <li><span>03</span> Truy cập chức năng đúng theo vai trò</li>
+      </ul>
+    </aside>
+  </div>
+</section>

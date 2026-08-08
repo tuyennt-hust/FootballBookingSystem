@@ -1,0 +1,88 @@
+<section class="page-hero page-hero-compact owner-hero">
+  <div class="container page-hero-inner">
+    <div>
+      <span class="section-kicker section-kicker-light">Đơn đặt sân</span>
+      <h1>Quản lý yêu cầu đặt sân</h1>
+      <p>Chỉ hiển thị đơn thuộc các sân do <%= owner.fullName %> quản lý.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section owner-bookings-section">
+  <div class="container">
+    <div class="owner-subnav">
+      <a href="/chu-san">Tổng quan</a>
+      <a href="/chu-san/san-bong">Sân bóng</a>
+      <a class="active" href="/chu-san/don-dat-san">Đơn đặt sân</a>
+    </div>
+
+    <form class="owner-booking-filter" action="/chu-san/don-dat-san" method="get">
+      <div class="booking-status-tabs">
+        <% statusTabs.forEach((tab) => { %>
+          <a class="<%= filters.status === tab.key ? 'active' : '' %>" href="/chu-san/don-dat-san?status=<%= tab.key %><%= filters.pitch ? `&pitch=${encodeURIComponent(filters.pitch)}` : '' %>"><%= tab.label %></a>
+        <% }) %>
+      </div>
+      <div class="owner-pitch-filter">
+        <label for="owner-pitch-filter">Lọc theo sân</label>
+        <select id="owner-pitch-filter" name="pitch">
+          <option value="">Tất cả sân</option>
+          <% pitches.forEach((pitch) => { %>
+            <option value="<%= pitch.ma_san %>" <%= filters.pitch === pitch.ma_san ? 'selected' : '' %>><%= pitch.ma_san %> · <%= pitch.ten_san %></option>
+          <% }) %>
+        </select>
+        <input type="hidden" name="status" value="<%= filters.status %>">
+        <button class="button button-primary" type="submit">Áp dụng</button>
+      </div>
+    </form>
+
+    <div class="owner-list-heading">
+      <div>
+        <h2><%= pagination.totalItems %> đơn đặt sân</h2>
+        <p>Trang <%= pagination.page %> / <%= pagination.totalPages %></p>
+      </div>
+    </div>
+
+    <% if (bookings.length === 0) { %>
+      <div class="empty-state"><strong>Không có đơn phù hợp</strong><p>Thử chọn trạng thái hoặc sân khác.</p></div>
+    <% } else { %>
+      <div class="owner-booking-list">
+        <% bookings.forEach((booking) => { %>
+          <article class="owner-booking-card">
+            <img src="<%= booking.imageUrl %>" alt="Ảnh <%= booking.ten_san %>">
+            <div class="owner-booking-card-main">
+              <div class="owner-booking-card-heading">
+                <div>
+                  <span class="section-kicker"><%= booking.ma_dat_san %> · <%= booking.ma_san %></span>
+                  <h2><%= booking.ten_san %></h2>
+                </div>
+                <span class="booking-status-badge <%= booking.bookingStatus.className %>"><%= booking.bookingStatus.label %></span>
+              </div>
+              <div class="owner-booking-facts">
+                <div><span>Khách hàng</span><strong><%= booking.ten_khach_hang %></strong><small><%= booking.sdt_khach_hang || 'Chưa có SĐT' %></small></div>
+                <div><span>Ngày đặt</span><strong><%= booking.ngay_dat_label %></strong><small><%= booking.timeLabel %></small></div>
+                <div><span>Tổng tiền</span><strong><%= formatMoney(booking.tong_tien) %></strong><small><%= booking.paymentStatus.label %></small></div>
+              </div>
+            </div>
+            <div class="owner-booking-card-actions">
+              <a class="button button-outline button-block" href="/chu-san/don-dat-san/<%= encodeURIComponent(booking.ma_dat_san) %>">Xem chi tiết</a>
+              <% if (booking.canConfirm) { %>
+                <form action="/chu-san/don-dat-san/<%= encodeURIComponent(booking.ma_dat_san) %>/xac-nhan" method="post">
+                  <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                  <button class="button button-primary button-block" type="submit">Xác nhận đơn</button>
+                </form>
+              <% } %>
+            </div>
+          </article>
+        <% }) %>
+      </div>
+
+      <% if (pagination.totalPages > 1) { %>
+        <nav class="pagination" aria-label="Phân trang đơn đặt sân">
+          <% for (let page = 1; page <= pagination.totalPages; page += 1) { %>
+            <a class="<%= page === pagination.page ? 'active' : '' %>" href="/chu-san/don-dat-san?status=<%= filters.status %><%= filters.pitch ? `&pitch=${encodeURIComponent(filters.pitch)}` : '' %>&page=<%= page %>"><%= page %></a>
+          <% } %>
+        </nav>
+      <% } %>
+    <% } %>
+  </div>
+</section>

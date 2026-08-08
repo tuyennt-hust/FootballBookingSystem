@@ -1,0 +1,18 @@
+const express = require('express');
+const adminController = require('../controllers/adminController');
+const { requireRole } = require('../middlewares/authMiddleware');
+const router = express.Router();
+router.use(requireRole('Admin'));
+router.get('/status', adminController.status);
+router.get('/dashboard', adminController.apiDashboard);
+router.get('/accounts', adminController.apiAccounts);
+router.post('/accounts/:accountId/status', adminController.apiSetAccountStatus);
+router.get('/areas', adminController.apiAreas);
+router.post('/areas', adminController.apiCreateArea);
+router.put('/areas/:areaId', adminController.apiUpdateArea);
+router.delete('/areas/:areaId', adminController.apiDeleteArea);
+router.get('/pitches', adminController.apiPitches);
+router.get('/bookings', adminController.apiBookings);
+router.get('/invoices', adminController.apiInvoices);
+router.get('/statistics', adminController.apiStatistics);
+module.exports = router;

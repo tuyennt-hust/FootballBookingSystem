@@ -1,0 +1,20 @@
+<section class="admin-hero"><div class="container"><span class="section-kicker section-kicker-light">ADMIN CONTROL CENTER</span><h1>Tổng quan hệ thống</h1><p>Theo dõi tài khoản, sân, đơn đặt và doanh thu từ một nơi.</p><%- include('_nav') %></div></section>
+<section class="section admin-section"><div class="container">
+  <div class="admin-stat-grid">
+    <article><span>Tài khoản</span><strong><%= stats.totalAccounts %></strong><small><%= stats.lockedAccounts %> bị khóa</small></article>
+    <article><span>Sân bóng</span><strong><%= stats.totalPitches %></strong><small><%= stats.activePitches %> hoạt động</small></article>
+    <article><span>Đơn đặt</span><strong><%= stats.totalBookings %></strong><small><%= stats.pendingBookings %> chờ xác nhận</small></article>
+    <article><span>Chưa thanh toán</span><strong><%= stats.unpaidInvoices %></strong><small>hóa đơn cần theo dõi</small></article>
+    <article class="admin-stat-revenue"><span>Doanh thu đã thu</span><strong><%= formatMoney(stats.paidRevenue) %></strong><small>từ hóa đơn đã thanh toán</small></article>
+  </div>
+  <div class="admin-dashboard-grid">
+    <article class="admin-panel"><div class="admin-panel-head"><div><span class="section-kicker">Tài khoản</span><h2>Cơ cấu người dùng</h2></div><a href="/admin/tai-khoan">Quản lý →</a></div>
+      <div class="admin-role-list"><div><span>Khách hàng</span><strong><%= roleCounts['Khach hang'] || 0 %></strong></div><div><span>Chủ sân</span><strong><%= roleCounts['Chu san'] || 0 %></strong></div><div><span>Quản trị viên</span><strong><%= roleCounts.Admin || 0 %></strong></div></div>
+    </article>
+    <article class="admin-panel"><div class="admin-panel-head"><div><span class="section-kicker">Truy cập nhanh</span><h2>Tác vụ quản trị</h2></div></div><div class="admin-quick-grid"><a href="/admin/khu-vuc">Quản lý khu vực</a><a href="/admin/san-bong">Kiểm tra sân</a><a href="/admin/hoa-don?status=Chua+thanh+toan">Hóa đơn chưa thu</a><a href="/admin/thong-ke">Mở báo cáo</a></div></article>
+  </div>
+  <div class="admin-panel admin-table-panel"><div class="admin-panel-head"><div><span class="section-kicker">Mới nhất</span><h2>Đơn đặt sân gần đây</h2></div><a href="/admin/don-dat-san">Xem tất cả →</a></div><div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>Mã đơn</th><th>Khách hàng</th><th>Sân</th><th>Chủ sân</th><th>Ngày / giờ</th><th>Đơn</th><th>Thanh toán</th><th>Tổng tiền</th></tr></thead><tbody>
+  <% recentBookings.forEach((b)=>{ %><tr><td><strong><%= b.ma_dat_san %></strong></td><td><%= b.ten_khach_hang %></td><td><%= b.ten_san %></td><td><%= b.ten_chu_san %></td><td><%= b.ngay_dat_label %><br><small><%= b.timeLabel %></small></td><td><span class="admin-badge <%= b.bookingStatus.tone %>"><%= b.bookingStatus.label %></span></td><td><span class="admin-badge <%= b.paymentStatus.tone %>"><%= b.paymentStatus.label %></span></td><td><%= formatMoney(b.tong_tien) %></td></tr><% }) %>
+  <% if (!recentBookings.length) { %><tr><td colspan="8" class="admin-empty">Chưa có đơn đặt sân.</td></tr><% } %>
+  </tbody></table></div></div>
+</div></section>

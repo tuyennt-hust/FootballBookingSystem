@@ -1,0 +1,67 @@
+<header class="site-header" data-header>
+  <div class="container header-inner">
+    <a class="brand" href="/" aria-label="Football Booking - Trang chủ">
+      <img src="/images/logo-football.svg" alt="" width="44" height="44">
+      <span class="brand-copy">
+        <strong>Football Booking</strong>
+        <small>Đặt sân dễ dàng</small>
+      </span>
+    </a>
+
+    <button class="nav-toggle" type="button" aria-label="Mở menu" aria-expanded="false" aria-controls="main-navigation" data-nav-toggle>
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+    <nav class="main-nav" id="main-navigation" aria-label="Điều hướng chính" data-nav>
+      <a class="<%= currentPath === '/' ? 'active' : '' %>" href="/">Trang chủ</a>
+      <a class="<%= currentPath.startsWith('/san-bong') ? 'active' : '' %>" href="/san-bong">Tìm sân</a>
+      <% if (currentUser && currentUser.role === 'Khach hang') { %>
+        <a class="<%= currentPath === '/lich-su-dat-san' || currentPath.startsWith('/dat-san/') ? 'active' : '' %>" href="/lich-su-dat-san">Lịch đặt</a>
+      <% } %>
+      <% if (currentUser && currentUser.role === 'Chu san') { %>
+        <a class="<%= currentPath.startsWith('/chu-san') ? 'active' : '' %>" href="/chu-san">Quản lý sân</a>
+      <% } %>
+      <% if (currentUser && currentUser.role === 'Admin') { %>
+        <a class="<%= currentPath.startsWith('/admin') ? 'active' : '' %>" href="/admin">Quản trị</a>
+      <% } %>
+      <a href="/#quy-trinh">Cách đặt sân</a>
+      <a href="/#lien-he">Liên hệ</a>
+
+      <div class="mobile-auth-links">
+        <% if (currentUser) { %>
+          <a class="<%= currentPath === '/tai-khoan' ? 'active' : '' %>" href="/tai-khoan">
+            Tài khoản: <%= currentUser.fullName %>
+          </a>
+          <form action="/dang-xuat" method="post">
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+            <button type="submit">Đăng xuất</button>
+          </form>
+        <% } else { %>
+          <a class="<%= currentPath === '/dang-nhap' ? 'active' : '' %>" href="/dang-nhap">Đăng nhập</a>
+          <a class="<%= currentPath === '/dang-ky' ? 'active' : '' %>" href="/dang-ky">Đăng ký</a>
+        <% } %>
+      </div>
+    </nav>
+
+    <div class="header-actions">
+      <% if (currentUser) { %>
+        <a class="user-chip" href="/tai-khoan" title="Mở thông tin tài khoản">
+          <span class="user-chip-avatar"><%= currentUser.fullName.charAt(0).toUpperCase() %></span>
+          <span class="user-chip-copy">
+            <strong><%= currentUser.fullName %></strong>
+            <small><%= currentUser.roleLabel %></small>
+          </span>
+        </a>
+        <form class="header-logout" action="/dang-xuat" method="post">
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+          <button class="button button-ghost" type="submit">Đăng xuất</button>
+        </form>
+      <% } else { %>
+        <a class="button button-ghost" href="/dang-nhap">Đăng nhập</a>
+        <a class="button button-primary" href="/dang-ky">Đăng ký</a>
+      <% } %>
+    </div>
+  </div>
+</header>

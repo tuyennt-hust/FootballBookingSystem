@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title">
+  <title id="title">Football Booking</title>
+  <defs>
+    <linearGradient id="g" x1="8" y1="8" x2="56" y2="56" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#22a866"/>
+      <stop offset="1" stop-color="#0b3d25"/>
+    </linearGradient>
+  </defs>
+  <rect x="4" y="4" width="56" height="56" rx="17" fill="url(#g)"/>
+  <circle cx="32" cy="32" r="17" fill="#fff"/>
+  <path d="m32 20 7 5-2.7 8.2h-8.6L25 25l7-5Z" fill="#0f5132"/>
+  <path d="m25 25-7 1.6-2 7 6 4.5 5.7-4.9L25 25Zm14 0 7 1.6 2 7-6 4.5-5.7-4.9L39 25ZM22 38.1l1.7 7 7 2.1L32 40l-4.3-6.8-5.7 4.9Zm20 0-1.7 7-7 2.1L32 40l4.3-6.8 5.7 4.9Z" fill="#dff8e8"/>
+</svg>

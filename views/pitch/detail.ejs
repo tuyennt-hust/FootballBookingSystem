@@ -1,0 +1,167 @@
+<section class="detail-section">
+  <div class="container">
+    <nav class="breadcrumb" aria-label="Đường dẫn">
+      <a href="/">Trang chủ</a>
+      <span>/</span>
+      <a href="/san-bong">Danh sách sân</a>
+      <span>/</span>
+      <strong><%= pitch.ten_san %></strong>
+    </nav>
+
+    <div class="pitch-detail-hero">
+      <div class="pitch-detail-media">
+        <img src="<%= pitch.imageUrl %>" alt="Ảnh minh họa <%= pitch.ten_san %>">
+        <span class="status-badge status-active">Đang hoạt động</span>
+      </div>
+
+      <div class="pitch-detail-copy">
+        <span class="section-kicker"><%= pitch.loai_san %></span>
+        <h1><%= pitch.ten_san %></h1>
+        <p class="pitch-detail-address">⌖ <%= pitch.dia_chi || pitch.ten_khu_vuc %>, <%= pitch.quan_huyen %></p>
+
+        <div class="detail-price-row">
+          <div>
+            <span>Giá ca thường</span>
+            <strong><%= formatMoney(pitch.gia_thue) %></strong>
+          </div>
+          <p>Ca giờ điểm được hệ thống tính thêm 20% theo trigger database.</p>
+        </div>
+
+        <dl class="detail-facts">
+          <div>
+            <dt>Khu vực</dt>
+            <dd><%= pitch.ten_khu_vuc %></dd>
+          </div>
+          <div>
+            <dt>Quận/Huyện</dt>
+            <dd><%= pitch.quan_huyen %></dd>
+          </div>
+          <div>
+            <dt>Chủ sân</dt>
+            <dd><%= pitch.ten_chu_san %></dd>
+          </div>
+          <div>
+            <dt>Liên hệ</dt>
+            <dd><%= pitch.sdt_chu_san || 'Chưa cập nhật' %></dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section availability-section" id="lich-trong">
+  <div class="container availability-layout">
+    <div class="availability-main">
+      <div class="availability-heading">
+        <div>
+          <span class="section-kicker">Lịch sân trực tiếp</span>
+          <h2>Chọn ngày và khung giờ</h2>
+          <p><%= selectedDateLabel %> · còn <strong><%= availableCount %></strong> khung giờ khả dụng</p>
+        </div>
+
+        <form class="date-picker-form" action="/san-bong/<%= encodeURIComponent(pitch.ma_san) %>" method="get">
+          <label for="booking-date">Ngày muốn đặt</label>
+          <div>
+            <input id="booking-date" type="date" name="date" value="<%= selectedDate %>" min="<%= minDate %>" max="<%= maxDate %>" required>
+            <button class="button button-outline" type="submit">Xem lịch</button>
+          </div>
+        </form>
+      </div>
+
+      <form class="slot-selection-form" action="/dat-san/tao" method="get" data-slot-form>
+        <input type="hidden" name="pitchId" value="<%= pitch.ma_san %>">
+        <input type="hidden" name="date" value="<%= selectedDate %>">
+
+        <div class="slot-grid" role="radiogroup" aria-label="Khung giờ đặt sân">
+          <% availability.forEach((slot) => { %>
+            <% if (slot.available) { %>
+              <label class="slot-card slot-available">
+                <input
+                  type="radio"
+                  name="slotId"
+                  value="<%= slot.ma_khung_gio %>"
+                  data-time-label="<%= slot.timeLabel %>"
+                  data-price-label="<%= formatMoney(slot.gia_ca) %>"
+                  required
+                >
+                <span class="slot-card-top">
+                  <strong><%= slot.timeLabel %></strong>
+                  <% if (slot.la_gio_diem) { %><em>Giờ điểm</em><% } %>
+                </span>
+                <span class="slot-status"><%= slot.statusLabel %></span>
+                <span class="slot-price"><%= formatMoney(slot.gia_ca) %></span>
+              </label>
+            <% } else { %>
+              <div class="slot-card slot-unavailable <%= slot.state === 'past' ? 'slot-past' : 'slot-booked' %>" aria-disabled="true">
+                <span class="slot-card-top">
+                  <strong><%= slot.timeLabel %></strong>
+                  <% if (slot.la_gio_diem) { %><em>Giờ điểm</em><% } %>
+                </span>
+                <span class="slot-status"><%= slot.statusLabel %></span>
+                <span class="slot-price"><%= formatMoney(slot.gia_ca) %></span>
+              </div>
+            <% } %>
+          <% }) %>
+        </div>
+
+        <div class="booking-selection-summary" data-selection-summary>
+          <div>
+            <span>Khung giờ đã chọn</span>
+            <strong data-selected-time>Chưa chọn khung giờ</strong>
+          </div>
+          <div>
+            <span>Tạm tính</span>
+            <strong data-selected-price>—</strong>
+          </div>
+
+          <% if (currentUser && currentUser.role !== 'Khach hang') { %>
+            <button class="button button-primary" type="button" disabled title="Chỉ tài khoản khách hàng được đặt sân">Chỉ dành cho khách hàng</button>
+          <% } else { %>
+            <button class="button button-primary" type="submit" data-booking-submit disabled>
+              <%= currentUser ? 'Tiếp tục đặt sân' : 'Đăng nhập để đặt sân' %>
+            </button>
+          <% } %>
+        </div>
+      </form>
+
+      <div class="availability-note">
+        <strong>Cách đọc trạng thái:</strong>
+        <span><i class="legend-dot legend-available"></i>Còn trống</span>
+        <span><i class="legend-dot legend-booked"></i>Đã có người đặt</span>
+        <span><i class="legend-dot legend-past"></i>Đã qua giờ</span>
+      </div>
+    </div>
+
+    <aside class="booking-policy-card">
+      <span class="section-kicker">Thông tin đặt sân</span>
+      <h2>Trước khi tiếp tục</h2>
+      <ul>
+        <li>Khung giờ “Chờ xác nhận” và “Đã xác nhận” đều được tính là đã có người đặt.</li>
+        <li>Đơn “Đã hủy” không chiếm lịch sân.</li>
+        <li>Giờ điểm tăng 20% và được hiển thị trực tiếp trong từng khung giờ.</li>
+        <li>Hệ thống sẽ kiểm tra lại lịch một lần nữa khi xác nhận đơn.</li>
+      </ul>
+      <a class="button button-ghost button-block" href="/san-bong?area=<%= encodeURIComponent(pitch.ma_khu_vuc) %>">Xem sân khác cùng khu vực</a>
+    </aside>
+  </div>
+</section>
+
+<% if (relatedPitches.length > 0) { %>
+  <section class="section related-section">
+    <div class="container">
+      <div class="section-heading heading-row">
+        <div>
+          <span class="section-kicker">Gợi ý gần đó</span>
+          <h2>Sân khác cùng khu vực</h2>
+        </div>
+        <a class="text-link" href="/san-bong?area=<%= encodeURIComponent(pitch.ma_khu_vuc) %>">Xem tất cả →</a>
+      </div>
+      <div class="pitch-grid">
+        <% relatedPitches.forEach((relatedPitch) => { %>
+          <%- include('../partials/pitch-card', { pitch: relatedPitch }) %>
+        <% }) %>
+      </div>
+    </div>
+  </section>
+<% } %>

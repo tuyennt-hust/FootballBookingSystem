@@ -1,0 +1,21 @@
+services:
+  postgres:
+    image: postgres:17
+    container_name: football-booking-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: dat_san_bong
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - football_booking_data:/var/lib/postgresql/data
+      - ./database/01_schema.sql:/docker-entrypoint-initdb.d/01_schema.sql:ro
+      - ./database/02_seed.sql:/docker-entrypoint-initdb.d/02_seed.sql:ro
+      - ./database/03_functions.sql:/docker-entrypoint-initdb.d/03_functions.sql:ro
+      - ./database/04_triggers.sql:/docker-entrypoint-initdb.d/04_triggers.sql:ro
+      - ./database/05_views.sql:/docker-entrypoint-initdb.d/05_views.sql:ro
+
+volumes:
+  football_booking_data:

@@ -1,0 +1,116 @@
+<section class="page-hero">
+  <div class="container page-hero-inner">
+    <div>
+      <span class="section-kicker section-kicker-light">Danh sách sân</span>
+      <h1>Tìm sân bóng phù hợp</h1>
+      <p>Lọc dữ liệu theo tên, địa điểm, khu vực và loại sân.</p>
+    </div>
+    <div class="page-hero-icon" aria-hidden="true">⚽</div>
+  </div>
+</section>
+
+<section class="section section-listing">
+  <div class="container">
+    <form class="filter-panel" action="/san-bong" method="get">
+      <div class="filter-field filter-field-wide">
+        <label for="filter-q">Từ khóa</label>
+        <input id="filter-q" type="search" name="q" value="<%= filters.keyword %>" placeholder="Tên sân, địa chỉ hoặc quận...">
+      </div>
+
+      <div class="filter-field">
+        <label for="filter-area">Khu vực</label>
+        <select id="filter-area" name="area">
+          <option value="">Tất cả khu vực</option>
+          <% areas.forEach((area) => { %>
+            <option value="<%= area.ma_khu_vuc %>" <%= filters.areaId === area.ma_khu_vuc ? 'selected' : '' %>>
+              <%= area.ten_khu_vuc %> - <%= area.quan_huyen %>
+            </option>
+          <% }) %>
+        </select>
+      </div>
+
+      <div class="filter-field">
+        <label for="filter-type">Loại sân</label>
+        <select id="filter-type" name="type">
+          <option value="">Tất cả loại sân</option>
+          <% pitchTypes.forEach((type) => { %>
+            <option value="<%= type %>" <%= filters.pitchType === type ? 'selected' : '' %>><%= type %></option>
+          <% }) %>
+        </select>
+      </div>
+
+      <div class="filter-field">
+        <label for="filter-sort">Sắp xếp</label>
+        <select id="filter-sort" name="sort">
+          <option value="default" <%= filters.sort === 'default' ? 'selected' : '' %>>Mặc định</option>
+          <option value="price_asc" <%= filters.sort === 'price_asc' ? 'selected' : '' %>>Giá thấp đến cao</option>
+          <option value="price_desc" <%= filters.sort === 'price_desc' ? 'selected' : '' %>>Giá cao đến thấp</option>
+          <option value="name_asc" <%= filters.sort === 'name_asc' ? 'selected' : '' %>>Tên A-Z</option>
+        </select>
+      </div>
+
+      <div class="filter-actions">
+        <button class="button button-primary" type="submit">Áp dụng</button>
+        <a class="button button-ghost" href="/san-bong">Xóa lọc</a>
+      </div>
+    </form>
+
+    <div class="listing-toolbar">
+      <div>
+        <h2><%= pagination.totalItems %> sân đang hoạt động</h2>
+        <p>Trang <%= pagination.page %> / <%= pagination.totalPages %></p>
+      </div>
+      <% if (filters.keyword || filters.areaId || filters.pitchType) { %>
+        <span class="filter-active-badge">Đang áp dụng bộ lọc</span>
+      <% } %>
+    </div>
+
+    <% if (pitches.length > 0) { %>
+      <div class="pitch-grid">
+        <% pitches.forEach((pitch) => { %>
+          <%- include('../partials/pitch-card', { pitch }) %>
+        <% }) %>
+      </div>
+
+      <% if (pagination.totalPages > 1) { %>
+        <% const makePageUrl = (pageNumber) => {
+          const params = new URLSearchParams();
+          if (filters.keyword) params.set('q', filters.keyword);
+          if (filters.areaId) params.set('area', filters.areaId);
+          if (filters.pitchType) params.set('type', filters.pitchType);
+          if (filters.sort && filters.sort !== 'default') params.set('sort', filters.sort);
+          params.set('page', pageNumber);
+          return `/san-bong?${params.toString()}`;
+        }; %>
+        <nav class="pagination" aria-label="Phân trang danh sách sân">
+          <% if (pagination.page > 1) { %>
+            <a href="<%= makePageUrl(pagination.page - 1) %>">← Trước</a>
+          <% } else { %>
+            <span class="disabled">← Trước</span>
+          <% } %>
+
+          <% for (let pageNumber = 1; pageNumber <= pagination.totalPages; pageNumber += 1) { %>
+            <% if (pageNumber === 1 || pageNumber === pagination.totalPages || Math.abs(pageNumber - pagination.page) <= 1) { %>
+              <a class="<%= pageNumber === pagination.page ? 'active' : '' %>" href="<%= makePageUrl(pageNumber) %>" <% if (pageNumber === pagination.page) { %>aria-current="page"<% } %>><%= pageNumber %></a>
+            <% } else if (pageNumber === pagination.page - 2 || pageNumber === pagination.page + 2) { %>
+              <span class="ellipsis">…</span>
+            <% } %>
+          <% } %>
+
+          <% if (pagination.page < pagination.totalPages) { %>
+            <a href="<%= makePageUrl(pagination.page + 1) %>">Sau →</a>
+          <% } else { %>
+            <span class="disabled">Sau →</span>
+          <% } %>
+        </nav>
+      <% } %>
+    <% } else { %>
+      <div class="empty-state empty-state-large">
+        <div class="empty-icon">⌕</div>
+        <h2>Không tìm thấy sân phù hợp</h2>
+        <p>Thử thay đổi từ khóa, khu vực hoặc loại sân đang chọn.</p>
+        <a class="button button-primary" href="/san-bong">Xem toàn bộ sân</a>
+      </div>
+    <% } %>
+  </div>
+</section>

@@ -1,0 +1,97 @@
+<% const isEdit = mode === 'edit'; %>
+<section class="page-hero page-hero-compact owner-hero">
+  <div class="container page-hero-inner">
+    <div>
+      <span class="section-kicker section-kicker-light"><%= isEdit ? 'Chỉnh sửa sân' : 'Thêm sân mới' %></span>
+      <h1><%= isEdit ? pitch.ten_san : 'Tạo sân bóng' %></h1>
+      <p>Ảnh được lưu trong public/uploads/pitches; thông tin còn lại lưu trên PostgreSQL.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section owner-form-section">
+  <div class="container owner-form-layout">
+    <form
+      class="owner-pitch-form"
+      action="<%= isEdit ? `/chu-san/san-bong/${encodeURIComponent(pitch.ma_san)}/chinh-sua` : '/chu-san/san-bong' %>"
+      method="post"
+      enctype="multipart/form-data"
+    >
+      <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+
+      <% if (formError) { %>
+        <div class="form-message form-message-error" role="alert"><%= formError %></div>
+      <% } %>
+
+      <div class="owner-form-heading">
+        <div>
+          <span class="section-kicker">Thông tin cơ bản</span>
+          <h2><%= isEdit ? `Mã sân ${pitch.ma_san}` : 'Mã sân được tạo tự động' %></h2>
+        </div>
+        <a class="text-link" href="/chu-san/san-bong">← Quay lại danh sách</a>
+      </div>
+
+      <div class="form-grid-two">
+        <label class="form-field form-field-wide">
+          <span>Tên sân</span>
+          <input type="text" name="name" maxlength="100" required value="<%= pitch?.ten_san || '' %>" placeholder="Ví dụ: Sân bóng Bách Khoa 1">
+        </label>
+
+        <label class="form-field form-field-wide">
+          <span>Địa chỉ</span>
+          <input type="text" name="address" maxlength="200" required value="<%= pitch?.dia_chi || '' %>" placeholder="Số nhà, đường/phố">
+        </label>
+
+        <label class="form-field">
+          <span>Loại sân</span>
+          <select name="pitchType" required>
+            <option value="">Chọn loại sân</option>
+            <% pitchTypes.forEach((type) => { %>
+              <option value="<%= type %>" <%= pitch?.loai_san === type ? 'selected' : '' %>><%= type %></option>
+            <% }) %>
+          </select>
+        </label>
+
+        <label class="form-field">
+          <span>Khu vực</span>
+          <select name="areaId" required>
+            <option value="">Chọn khu vực</option>
+            <% areas.forEach((area) => { %>
+              <option value="<%= area.ma_khu_vuc %>" <%= pitch?.ma_khu_vuc === area.ma_khu_vuc ? 'selected' : '' %>><%= area.ten_khu_vuc %> · <%= area.quan_huyen %></option>
+            <% }) %>
+          </select>
+        </label>
+
+        <label class="form-field">
+          <span>Giá thuê ca thường</span>
+          <div class="input-suffix">
+            <input type="number" name="price" min="1000" max="10000000" step="1000" required value="<%= pitch?.gia_thue || '' %>">
+            <em>đồng</em>
+          </div>
+        </label>
+
+        <label class="form-field">
+          <span>Ảnh đại diện <%= isEdit ? '(không chọn nếu giữ ảnh cũ)' : '' %></span>
+          <input type="file" name="image" accept="image/jpeg,image/png,image/webp">
+          <small>JPG, PNG hoặc WebP; tối đa 5 MB. Khuyến nghị ảnh ngang 1200 × 750 px.</small>
+        </label>
+      </div>
+
+      <div class="owner-form-actions">
+        <a class="button button-outline" href="/chu-san/san-bong">Hủy</a>
+        <button class="button button-primary" type="submit"><%= isEdit ? 'Lưu thay đổi' : 'Tạo sân bóng' %></button>
+      </div>
+    </form>
+
+    <aside class="owner-image-preview-card">
+      <span class="section-kicker">Ảnh hiện tại</span>
+      <img src="<%= pitch?.imageUrl || '/images/pitch-default.svg' %>" alt="Ảnh xem trước sân bóng">
+      <h2>Lưu ý ảnh sân</h2>
+      <ul>
+        <li>Dùng ảnh thật, đủ sáng và không có watermark lớn.</li>
+        <li>Ảnh upload mới sẽ thay ảnh cũ sau khi cập nhật thành công.</li>
+        <li>Nếu chưa có ảnh, hệ thống dùng SVG mặc định theo loại sân.</li>
+      </ul>
+    </aside>
+  </div>
+</section>

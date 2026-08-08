@@ -1,0 +1,74 @@
+<section class="page-hero page-hero-compact">
+  <div class="container page-hero-inner">
+    <div>
+      <span class="section-kicker section-kicker-light">Bước 2/2 · Xác nhận đặt sân</span>
+      <h1>Kiểm tra thông tin đã chọn</h1>
+      <p>Hệ thống sẽ kiểm tra lại lịch trống ngay khi bạn bấm xác nhận.</p>
+    </div>
+    <div class="page-hero-icon" aria-hidden="true">✓</div>
+  </div>
+</section>
+
+<section class="section booking-review-section">
+  <div class="container booking-review-layout">
+    <article class="booking-review-card">
+      <div class="booking-review-pitch">
+        <img src="<%= pitch.imageUrl %>" alt="Ảnh minh họa <%= pitch.ten_san %>">
+        <div>
+          <span class="section-kicker"><%= pitch.loai_san %></span>
+          <h2><%= pitch.ten_san %></h2>
+          <p>⌖ <%= pitch.dia_chi || pitch.ten_khu_vuc %>, <%= pitch.quan_huyen %></p>
+        </div>
+      </div>
+
+      <dl class="booking-review-details">
+        <div>
+          <dt>Ngày đặt</dt>
+          <dd><%= selectedDateLabel %></dd>
+        </div>
+        <div>
+          <dt>Khung giờ</dt>
+          <dd><%= slot.timeLabel %></dd>
+        </div>
+        <div>
+          <dt>Loại giá</dt>
+          <dd><%= slot.la_gio_diem ? 'Giờ điểm (+20%)' : 'Ca thường' %></dd>
+        </div>
+        <div>
+          <dt>Khách hàng</dt>
+          <dd><%= customer.fullName %> · <%= customer.customerId %></dd>
+        </div>
+      </dl>
+
+      <div class="booking-total-row">
+        <span>Tiền sân</span>
+        <strong><%= formatMoney(slot.gia_ca) %></strong>
+      </div>
+    </article>
+
+    <aside class="booking-next-card">
+      <span class="section-kicker">Xác nhận cuối cùng</span>
+      <h2>Tạo đơn đặt sân</h2>
+      <p>Sau khi xác nhận, đơn sẽ có trạng thái <strong>Chờ xác nhận</strong>. Chủ sân sẽ xử lý đơn ở phần quản lý tiếp theo.</p>
+
+      <div class="booking-confirm-note">
+        <strong>Hệ thống sẽ tự động</strong>
+        <ul>
+          <li>Kiểm tra trùng lịch lần cuối.</li>
+          <li>Tính tiền sân và giá giờ điểm.</li>
+          <li>Tạo hóa đơn chưa thanh toán.</li>
+        </ul>
+      </div>
+
+      <form action="/dat-san" method="post">
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+        <input type="hidden" name="pitchId" value="<%= pitch.ma_san %>">
+        <input type="hidden" name="date" value="<%= selectedDate %>">
+        <input type="hidden" name="slotId" value="<%= slot.ma_khung_gio %>">
+        <button class="button button-primary button-block" type="submit">Xác nhận đặt sân</button>
+      </form>
+
+      <a class="button button-ghost button-block" href="/san-bong/<%= encodeURIComponent(pitch.ma_san) %>?date=<%= encodeURIComponent(selectedDate) %>#lich-trong">← Chọn lại khung giờ</a>
+    </aside>
+  </div>
+</section>

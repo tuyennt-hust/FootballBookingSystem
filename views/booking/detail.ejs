@@ -1,0 +1,125 @@
+<section class="page-hero page-hero-compact booking-detail-hero">
+  <div class="container page-hero-inner">
+    <div>
+      <span class="section-kicker section-kicker-light">Chi tiết đơn đặt sân</span>
+      <h1><%= booking.ma_dat_san %></h1>
+      <p>Đơn được bảo vệ theo tài khoản khách hàng đang đăng nhập.</p>
+    </div>
+    <span class="booking-status-badge booking-status-badge-large <%= booking.bookingStatus.className %>"><%= booking.bookingStatus.label %></span>
+  </div>
+</section>
+
+<section class="section booking-detail-section">
+  <div class="container booking-detail-layout">
+    <div class="booking-detail-main">
+      <article class="booking-detail-card booking-detail-pitch-card">
+        <img src="<%= booking.imageUrl %>" alt="Ảnh minh họa <%= booking.ten_san %>">
+        <div>
+          <span class="section-kicker"><%= booking.loai_san %></span>
+          <h2><%= booking.ten_san %></h2>
+          <p>⌖ <%= booking.dia_chi || booking.ten_khu_vuc %>, <%= booking.quan_huyen %></p>
+          <a class="text-link" href="/san-bong/<%= encodeURIComponent(booking.ma_san) %>">Xem thông tin sân →</a>
+        </div>
+      </article>
+
+      <article class="booking-detail-card">
+        <div class="booking-detail-card-heading">
+          <div>
+            <span class="section-kicker">Lịch đã đặt</span>
+            <h2>Ngày và khung giờ</h2>
+          </div>
+        </div>
+
+        <dl class="booking-detail-grid">
+          <div>
+            <dt>Ngày đặt sân</dt>
+            <dd><%= booking.ngay_dat_label %></dd>
+          </div>
+          <div>
+            <dt>Khung giờ</dt>
+            <dd><%= booking.timeLabel %></dd>
+          </div>
+          <div>
+            <dt>Loại ca</dt>
+            <dd><%= booking.la_gio_diem ? 'Giờ điểm (+20%)' : 'Ca thường' %></dd>
+          </div>
+          <div>
+            <dt>Chủ sân</dt>
+            <dd><%= booking.ten_chu_san %></dd>
+          </div>
+          <div>
+            <dt>Điện thoại sân</dt>
+            <dd><%= booking.sdt_chu_san || 'Chưa cập nhật' %></dd>
+          </div>
+          <div>
+            <dt>Trạng thái đơn</dt>
+            <dd><span class="booking-status-badge <%= booking.bookingStatus.className %>"><%= booking.bookingStatus.label %></span></dd>
+          </div>
+        </dl>
+      </article>
+
+      <article class="booking-detail-card">
+        <div class="booking-detail-card-heading">
+          <div>
+            <span class="section-kicker">Hóa đơn tự động</span>
+            <h2>Thông tin thanh toán</h2>
+          </div>
+          <span class="payment-badge <%= booking.paymentStatus.className %>"><%= booking.paymentStatus.label %></span>
+        </div>
+
+        <div class="invoice-lines">
+          <div>
+            <span>Tiền sân</span>
+            <strong><%= formatMoney(booking.tong_tien_san) %></strong>
+          </div>
+          <div>
+            <span>Dịch vụ (<%= booking.so_loai_dich_vu %> loại)</span>
+            <strong><%= formatMoney(booking.tong_tien_dich_vu) %></strong>
+          </div>
+          <div class="invoice-total">
+            <span>Tổng cộng</span>
+            <strong><%= formatMoney(booking.tong_tien) %></strong>
+          </div>
+        </div>
+
+        <div class="booking-detail-payment-action">
+          <% if (booking.trang_thai_dat !== 'Da huy') { %>
+            <a class="button <%= booking.trang_thai_dat === 'Da xac nhan' ? 'button-primary' : 'button-outline' %>" href="/dat-san/<%= encodeURIComponent(booking.ma_dat_san) %>/hoa-don">
+              <%= booking.trang_thai_thanh_toan === 'Da thanh toan' ? 'Xem hóa đơn đã thanh toán' : booking.trang_thai_dat === 'Da xac nhan' ? 'Chọn dịch vụ & thanh toán' : 'Xem hóa đơn' %>
+            </a>
+          <% } %>
+        </div>
+      </article>
+    </div>
+
+    <aside class="booking-detail-sidebar">
+      <div class="booking-action-card">
+        <span class="section-kicker">Quản lý đơn</span>
+        <h2>Thao tác</h2>
+
+        <% if (booking.canCancel) { %>
+          <p>Bạn có thể hủy đơn vì lịch chưa bắt đầu và hóa đơn chưa được thanh toán.</p>
+          <form action="/dat-san/<%= encodeURIComponent(booking.ma_dat_san) %>/huy" method="post" data-confirm="Bạn chắc chắn muốn hủy đơn <%= booking.ma_dat_san %>?">
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+            <button class="button button-danger-soft button-block" type="submit">Hủy đơn đặt sân</button>
+          </form>
+        <% } else { %>
+          <p><%= booking.cancelReason %></p>
+          <button class="button button-disabled button-block" type="button" disabled>Không thể hủy đơn</button>
+        <% } %>
+
+        <a class="button button-outline button-block" href="/lich-su-dat-san">← Về lịch sử đặt sân</a>
+        <a class="button button-ghost button-block" href="/san-bong">Đặt thêm sân khác</a>
+      </div>
+
+      <div class="booking-process-card">
+        <strong>Quy trình xử lý</strong>
+        <ol>
+          <li class="done">Khách hàng tạo đơn</li>
+          <li class="<%= booking.trang_thai_dat === 'Da xac nhan' ? 'done' : booking.trang_thai_dat === 'Da huy' ? 'cancelled' : 'current' %>">Chủ sân xác nhận</li>
+          <li class="<%= booking.trang_thai_thanh_toan === 'Da thanh toan' ? 'done' : booking.trang_thai_dat === 'Da xac nhan' ? 'current' : '' %>">Chọn dịch vụ và thanh toán</li>
+        </ol>
+      </div>
+    </aside>
+  </div>
+</section>

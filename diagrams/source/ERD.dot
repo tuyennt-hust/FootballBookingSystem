@@ -1,0 +1,93 @@
+digraph ERD {
+  graph [rankdir=LR, bgcolor="white", pad="0.3", nodesep="0.55", ranksep="0.8", splines=ortho, fontname="DejaVu Sans"];
+  node [shape=plain, fontname="DejaVu Sans"];
+  edge [fontname="DejaVu Sans", fontsize=10, color="#46685a", arrowsize=0.7];
+
+  tai_khoan [label=<
+    <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="6" COLOR="#146c43">
+      <TR><TD BGCOLOR="#146c43"><FONT COLOR="white"><B>TAI_KHOAN</B></FONT></TD></TR>
+      <TR><TD ALIGN="LEFT"><B>PK</B> ma_tai_khoan</TD></TR>
+      <TR><TD ALIGN="LEFT">ten_dang_nhap UNIQUE</TD></TR>
+      <TR><TD ALIGN="LEFT">mat_khau</TD></TR>
+      <TR><TD ALIGN="LEFT">vai_tro, trang_thai</TD></TR>
+    </TABLE>>];
+  khach_hang [label=<
+    <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="6" COLOR="#146c43">
+      <TR><TD BGCOLOR="#eaf8ef"><B>KHACH_HANG</B></TD></TR>
+      <TR><TD ALIGN="LEFT"><B>PK</B> ma_khach_hang</TD></TR>
+      <TR><TD ALIGN="LEFT">ho_va_ten, sdt</TD></TR>
+      <TR><TD ALIGN="LEFT"><B>FK</B> ma_tai_khoan UNIQUE</TD></TR>
+    </TABLE>>];
+  chu_san [label=<
+    <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="6" COLOR="#146c43">
+      <TR><TD BGCOLOR="#eaf8ef"><B>CHU_SAN</B></TD></TR>
+      <TR><TD ALIGN="LEFT"><B>PK</B> ma_chu_san</TD></TR>
+      <TR><TD ALIGN="LEFT">ho_va_ten, sdt</TD></TR>
+      <TR><TD ALIGN="LEFT"><B>FK</B> ma_tai_khoan UNIQUE</TD></TR>
+    </TABLE>>];
+  khu_vuc [label=<
+    <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="6" COLOR="#146c43">
+      <TR><TD BGCOLOR="#eaf8ef"><B>KHU_VUC</B></TD></TR>
+      <TR><TD ALIGN="LEFT"><B>PK</B> ma_khu_vuc</TD></TR>
+      <TR><TD ALIGN="LEFT">ten_khu_vuc</TD></TR>
+      <TR><TD ALIGN="LEFT">quan_huyen</TD></TR>
+    </TABLE>>];
+  san_bong [label=<
+    <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="6" COLOR="#146c43">
+      <TR><TD BGCOLOR="#146c43"><FONT COLOR="white"><B>SAN_BONG</B></FONT></TD></TR>
+      <TR><TD ALIGN="LEFT"><B>PK</B> ma_san</TD></TR>
+      <TR><TD ALIGN="LEFT">ten_san, dia_chi, loai_san</TD></TR>
+      <TR><TD ALIGN="LEFT">gia_thue, trang_thai, image_url</TD></TR>
+      <TR><TD ALIGN="LEFT"><B>FK</B> ma_chu_san</TD></TR>
+      <TR><TD ALIGN="LEFT"><B>FK</B> ma_khu_vuc</TD></TR>
+    </TABLE>>];
+  khung_gio [label=<
+    <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="6" COLOR="#146c43">
+      <TR><TD BGCOLOR="#eaf8ef"><B>KHUNG_GIO</B></TD></TR>
+      <TR><TD ALIGN="LEFT"><B>PK</B> ma_khung_gio</TD></TR>
+      <TR><TD ALIGN="LEFT">gio_bat_dau, gio_ket_thuc</TD></TR>
+      <TR><TD ALIGN="LEFT">la_gio_diem</TD></TR>
+    </TABLE>>];
+  dat_san [label=<
+    <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="6" COLOR="#146c43">
+      <TR><TD BGCOLOR="#146c43"><FONT COLOR="white"><B>DAT_SAN</B></FONT></TD></TR>
+      <TR><TD ALIGN="LEFT"><B>PK</B> ma_dat_san</TD></TR>
+      <TR><TD ALIGN="LEFT">ngay_dat, trang_thai_dat, tien_san</TD></TR>
+      <TR><TD ALIGN="LEFT"><B>FK</B> ma_san</TD></TR>
+      <TR><TD ALIGN="LEFT"><B>FK</B> ma_khach_hang</TD></TR>
+      <TR><TD ALIGN="LEFT"><B>FK</B> ma_khung_gio</TD></TR>
+    </TABLE>>];
+  thanh_toan [label=<
+    <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="6" COLOR="#146c43">
+      <TR><TD BGCOLOR="#eaf8ef"><B>THANH_TOAN</B></TD></TR>
+      <TR><TD ALIGN="LEFT"><B>PK</B> ma_thanh_toan</TD></TR>
+      <TR><TD ALIGN="LEFT">tong_tien_san, tong_tien_dich_vu</TD></TR>
+      <TR><TD ALIGN="LEFT">tong_tien, trang_thai_thanh_toan</TD></TR>
+      <TR><TD ALIGN="LEFT"><B>FK</B> ma_dat_san UNIQUE</TD></TR>
+    </TABLE>>];
+  dich_vu [label=<
+    <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="6" COLOR="#146c43">
+      <TR><TD BGCOLOR="#eaf8ef"><B>DICH_VU</B></TD></TR>
+      <TR><TD ALIGN="LEFT"><B>PK</B> ma_dich_vu</TD></TR>
+      <TR><TD ALIGN="LEFT">ten_dv</TD></TR>
+      <TR><TD ALIGN="LEFT">don_gia</TD></TR>
+    </TABLE>>];
+  chi_tiet [label=<
+    <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="6" COLOR="#146c43">
+      <TR><TD BGCOLOR="#146c43"><FONT COLOR="white"><B>CHI_TIET_DICH_VU</B></FONT></TD></TR>
+      <TR><TD ALIGN="LEFT"><B>PK/FK</B> ma_dat_san</TD></TR>
+      <TR><TD ALIGN="LEFT"><B>PK/FK</B> ma_dich_vu</TD></TR>
+      <TR><TD ALIGN="LEFT">so_luong, don_gia, thanh_tien</TD></TR>
+    </TABLE>>];
+
+  tai_khoan -> khach_hang [label="1 : 0..1"];
+  tai_khoan -> chu_san [label="1 : 0..1"];
+  chu_san -> san_bong [label="1 : N"];
+  khu_vuc -> san_bong [label="1 : N"];
+  san_bong -> dat_san [label="1 : N"];
+  khach_hang -> dat_san [label="1 : N"];
+  khung_gio -> dat_san [label="1 : N"];
+  dat_san -> thanh_toan [label="1 : 1"];
+  dat_san -> chi_tiet [label="1 : N"];
+  dich_vu -> chi_tiet [label="1 : N"];
+}

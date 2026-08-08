@@ -1,0 +1,20 @@
+digraph SequenceBooking {
+  graph [rankdir=TB, bgcolor="white", pad="0.35", nodesep="0.55", ranksep="0.45", fontname="DejaVu Sans"];
+  node [fontname="DejaVu Sans", fontsize=11];
+  edge [fontname="DejaVu Sans", fontsize=9, color="#49695a", arrowsize=0.7];
+
+  actors [shape=record, style="rounded,filled", fillcolor="#e8f7ed", color="#b7d6c1",
+    label="{Khách hàng|Browser / EJS|BookingController|BookingService|BookingRepository|PostgreSQL}"];
+
+  s1 [shape=box, style="rounded,filled", fillcolor="#fbfefc", label="1. Chọn sân + ngày + khung giờ"];
+  s2 [shape=box, style="rounded,filled", fillcolor="#fbfefc", label="2. GET lịch trống → kiểm tra dat_san"];
+  s3 [shape=box, style="rounded,filled", fillcolor="#fbfefc", label="3. POST /dat-san + CSRF"];
+  s4 [shape=box, style="rounded,filled", fillcolor="#fff8df", label="4. Validate quyền khách hàng, ngày, slot"];
+  s5 [shape=box, style="rounded,filled", fillcolor="#fff8df", label="5. BEGIN + pg_advisory_xact_lock(slot)"];
+  s6 [shape=box, style="rounded,filled", fillcolor="#eaf2fb", label="6. fn_dat_san_bong(...)\nTrigger kiểm tra trùng lịch"];
+  s7 [shape=box, style="rounded,filled", fillcolor="#eaf2fb", label="7. Trigger tính tiền sân + tạo thanh_toan"];
+  s8 [shape=box, style="rounded,filled", fillcolor="#e8f7ed", label="8. COMMIT → trả mã đơn"];
+  s9 [shape=box, style="rounded,filled", fillcolor="#e8f7ed", label="9. Redirect /dat-san/:id → hiển thị chi tiết"];
+
+  actors -> s1 -> s2 -> s3 -> s4 -> s5 -> s6 -> s7 -> s8 -> s9;
+}

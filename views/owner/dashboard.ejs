@@ -1,0 +1,95 @@
+<section class="page-hero owner-hero">
+  <div class="container page-hero-inner">
+    <div>
+      <span class="section-kicker section-kicker-light">Khu vực chủ sân</span>
+      <h1>Xin chào, <%= owner.fullName %></h1>
+      <p>Theo dõi sân bóng và các đơn cần xử lý từ một dashboard duy nhất.</p>
+    </div>
+    <a class="button button-light" href="/chu-san/san-bong/them">+ Thêm sân mới</a>
+  </div>
+</section>
+
+<section class="section owner-dashboard-section">
+  <div class="container">
+    <div class="owner-stat-grid">
+      <article class="owner-stat-card">
+        <span>Tổng số sân</span>
+        <strong><%= stats.totalPitches %></strong>
+        <small><%= stats.activePitches %> sân đang hoạt động</small>
+      </article>
+      <article class="owner-stat-card owner-stat-warning">
+        <span>Chờ xác nhận</span>
+        <strong><%= stats.pendingBookings %></strong>
+        <small>Đơn tương lai cần xử lý</small>
+      </article>
+      <article class="owner-stat-card">
+        <span>Lịch hôm nay</span>
+        <strong><%= stats.todayBookings %></strong>
+        <small>Không tính đơn đã hủy</small>
+      </article>
+      <article class="owner-stat-card">
+        <span>Đã thanh toán</span>
+        <strong><%= formatMoney(stats.paidRevenue) %></strong>
+        <small>Doanh thu ghi nhận trong hệ thống</small>
+      </article>
+    </div>
+
+    <div class="owner-dashboard-grid">
+      <article class="owner-panel">
+        <div class="owner-panel-heading">
+          <div>
+            <span class="section-kicker">Lịch sắp tới</span>
+            <h2>Đơn đặt sân gần nhất</h2>
+          </div>
+          <a class="text-link" href="/chu-san/don-dat-san">Xem tất cả →</a>
+        </div>
+
+        <% if (recentBookings.length === 0) { %>
+          <div class="empty-state compact-empty-state">
+            <strong>Chưa có lịch sắp tới</strong>
+            <p>Các đơn tương lai sẽ xuất hiện tại đây.</p>
+          </div>
+        <% } else { %>
+          <div class="owner-booking-table-wrap">
+            <table class="owner-table">
+              <thead>
+                <tr>
+                  <th>Mã đơn</th>
+                  <th>Sân</th>
+                  <th>Khách hàng</th>
+                  <th>Thời gian</th>
+                  <th>Trạng thái</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <% recentBookings.forEach((booking) => { %>
+                  <tr>
+                    <td><strong><%= booking.ma_dat_san %></strong></td>
+                    <td><%= booking.ten_san %></td>
+                    <td><%= booking.ten_khach_hang %></td>
+                    <td><%= booking.ngay_dat_label %><br><small><%= booking.timeLabel %></small></td>
+                    <td><span class="booking-status-badge <%= booking.bookingStatus.className %>"><%= booking.bookingStatus.label %></span></td>
+                    <td><a class="text-link" href="/chu-san/don-dat-san/<%= encodeURIComponent(booking.ma_dat_san) %>">Chi tiết</a></td>
+                  </tr>
+                <% }) %>
+              </tbody>
+            </table>
+          </div>
+        <% } %>
+      </article>
+
+      <aside class="owner-panel owner-quick-panel">
+        <span class="section-kicker">Quản lý nhanh</span>
+        <h2>Tình trạng sân</h2>
+        <div class="owner-status-summary">
+          <div><span class="status-dot status-dot-active"></span><span>Hoạt động</span><strong><%= statusCounts['Hoat dong'] %></strong></div>
+          <div><span class="status-dot status-dot-maintenance"></span><span>Bảo trì</span><strong><%= statusCounts['Bao tri'] %></strong></div>
+          <div><span class="status-dot status-dot-inactive"></span><span>Ngừng hoạt động</span><strong><%= statusCounts['Ngung hoat dong'] %></strong></div>
+        </div>
+        <a class="button button-primary button-block" href="/chu-san/san-bong">Quản lý sân bóng</a>
+        <a class="button button-outline button-block" href="/chu-san/don-dat-san?status=pending">Xử lý đơn chờ xác nhận</a>
+      </aside>
+    </div>
+  </div>
+</section>

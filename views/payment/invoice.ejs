@@ -1,0 +1,121 @@
+<section class="page-hero page-hero-compact payment-hero">
+  <div class="container page-hero-inner">
+    <div>
+      <span class="section-kicker section-kicker-light">Dịch vụ & thanh toán</span>
+      <h1>Hóa đơn <%= invoice.ma_dat_san %></h1>
+      <p>Tiền dịch vụ được trigger PostgreSQL cập nhật tự động vào tổng hóa đơn.</p>
+    </div>
+    <span class="payment-badge payment-badge-large <%= invoice.paymentStatus.className %>"><%= invoice.paymentStatus.label %></span>
+  </div>
+</section>
+
+<section class="section payment-page-section">
+  <div class="container payment-page-layout">
+    <div class="payment-page-main">
+      <article class="payment-booking-card">
+        <img src="<%= invoice.imageUrl %>" alt="Ảnh <%= invoice.ten_san %>">
+        <div>
+          <span class="section-kicker"><%= invoice.ma_san %> · <%= invoice.loai_san %></span>
+          <h2><%= invoice.ten_san %></h2>
+          <p>⌖ <%= invoice.dia_chi %></p>
+          <div class="payment-booking-facts">
+            <span><strong><%= invoice.ngay_dat_label %></strong></span>
+            <span><strong><%= invoice.timeLabel %></strong></span>
+            <span class="booking-status-badge <%= invoice.bookingStatus.className %>"><%= invoice.bookingStatus.label %></span>
+          </div>
+        </div>
+      </article>
+
+      <article class="payment-service-section">
+        <div class="payment-section-heading">
+          <div>
+            <span class="section-kicker">Dịch vụ bổ sung</span>
+            <h2>Chọn dịch vụ cho trận đấu</h2>
+          </div>
+          <% if (!actionState.canEditServices) { %>
+            <span class="payment-lock-note">🔒 <%= actionState.reason %></span>
+          <% } %>
+        </div>
+
+        <div class="service-catalog-grid">
+          <% serviceCatalog.forEach((service) => { %>
+            <article class="service-card <%= !actionState.canEditServices ? 'service-card-disabled' : '' %>">
+              <div class="service-icon" aria-hidden="true"><%= service.icon %></div>
+              <div class="service-card-info">
+                <strong><%= service.ten_dv %></strong>
+                <span><%= formatMoney(service.don_gia) %> / đơn vị</span>
+              </div>
+              <form action="/dat-san/<%= encodeURIComponent(invoice.ma_dat_san) %>/dich-vu" method="post">
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                <input type="hidden" name="serviceId" value="<%= service.ma_dich_vu %>">
+                <input type="number" name="quantity" min="1" max="20" step="1" value="1" aria-label="Số lượng <%= service.ten_dv %>" <%= actionState.canEditServices ? '' : 'disabled' %>>
+                <button class="button button-outline" type="submit" <%= actionState.canEditServices ? '' : 'disabled' %>>Thêm</button>
+              </form>
+            </article>
+          <% }) %>
+        </div>
+      </article>
+    </div>
+
+    <aside class="invoice-card-sticky">
+      <div class="invoice-card-heading">
+        <div>
+          <span class="section-kicker">Chi tiết hóa đơn</span>
+          <h2><%= invoice.ma_thanh_toan || 'Hóa đơn' %></h2>
+        </div>
+        <span class="payment-badge <%= invoice.paymentStatus.className %>"><%= invoice.paymentStatus.label %></span>
+      </div>
+
+      <div class="invoice-service-list">
+        <% if (!selectedServices.length) { %>
+          <p class="invoice-empty-services">Chưa chọn dịch vụ bổ sung.</p>
+        <% } else { %>
+          <% selectedServices.forEach((service) => { %>
+            <div class="invoice-service-line">
+              <div>
+                <strong><%= service.icon %> <%= service.ten_dv %></strong>
+                <span><%= service.so_luong %> × <%= formatMoney(service.don_gia) %></span>
+              </div>
+              <div class="invoice-service-price">
+                <strong><%= formatMoney(service.thanh_tien) %></strong>
+                <% if (actionState.canEditServices) { %>
+                  <form action="/dat-san/<%= encodeURIComponent(invoice.ma_dat_san) %>/dich-vu/<%= encodeURIComponent(service.ma_dich_vu) %>/xoa" method="post" data-confirm="Xóa <%= service.ten_dv %> khỏi hóa đơn?">
+                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                    <button type="submit" class="invoice-remove-button">Xóa</button>
+                  </form>
+                <% } %>
+              </div>
+            </div>
+          <% }) %>
+        <% } %>
+      </div>
+
+      <div class="invoice-lines invoice-lines-payment">
+        <div><span>Tiền sân</span><strong><%= formatMoney(invoice.tong_tien_san) %></strong></div>
+        <div><span>Tiền dịch vụ</span><strong><%= formatMoney(invoice.tong_tien_dich_vu) %></strong></div>
+        <div class="invoice-total"><span>Tổng thanh toán</span><strong><%= formatMoney(invoice.tong_tien) %></strong></div>
+      </div>
+
+      <% if (invoice.trang_thai_thanh_toan === 'Da thanh toan') { %>
+        <div class="payment-success-box">
+          <strong>✓ Đã thanh toán</strong>
+          <p>Hóa đơn đã được ghi nhận thanh toán trong PostgreSQL.</p>
+        </div>
+      <% } else if (actionState.canPay) { %>
+        <div class="payment-demo-note">
+          <strong>Thanh toán mô phỏng</strong>
+          <p>Phần 7 ghi nhận thanh toán trong hệ thống, chưa kết nối VNPay/MoMo/Stripe.</p>
+        </div>
+        <form action="/dat-san/<%= encodeURIComponent(invoice.ma_dat_san) %>/thanh-toan" method="post" data-confirm="Xác nhận thanh toán <%= formatMoney(invoice.tong_tien) %>?">
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+          <button class="button button-primary button-block" type="submit">Thanh toán <%= formatMoney(invoice.tong_tien) %></button>
+        </form>
+      <% } else { %>
+        <div class="payment-waiting-box"><%= actionState.reason %></div>
+        <button class="button button-disabled button-block" type="button" disabled>Chưa thể thanh toán</button>
+      <% } %>
+
+      <a class="button button-ghost button-block" href="/dat-san/<%= encodeURIComponent(invoice.ma_dat_san) %>">← Về chi tiết đơn</a>
+    </aside>
+  </div>
+</section>

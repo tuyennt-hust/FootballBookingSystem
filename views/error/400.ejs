@@ -1,0 +1,17 @@
+<section class="error-page">
+  <div class="container error-card">
+    <strong><%= status %></strong>
+    <h1>Yêu cầu chưa hợp lệ</h1>
+    <p><%= message %></p>
+    <div class="button-row button-row-center">
+      <a class="button button-primary" href="/san-bong">Quay lại danh sách sân</a>
+      <a class="button button-ghost" href="/">Về trang chủ</a>
+    </div>
+    <% if (stack) { %>
+      <details class="error-details">
+        <summary>Chi tiết dành cho môi trường phát triển</summary>
+        <pre><%= stack %></pre>
+      </details>
+    <% } %>
+  </div>
+</section>

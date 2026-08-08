@@ -1,0 +1,9 @@
+<nav class="admin-subnav" aria-label="Điều hướng quản trị">
+  <a class="<%= currentPath === '/admin' ? 'active' : '' %>" href="/admin">Tổng quan</a>
+  <a class="<%= currentPath.startsWith('/admin/tai-khoan') ? 'active' : '' %>" href="/admin/tai-khoan">Tài khoản</a>
+  <a class="<%= currentPath.startsWith('/admin/khu-vuc') ? 'active' : '' %>" href="/admin/khu-vuc">Khu vực</a>
+  <a class="<%= currentPath.startsWith('/admin/san-bong') ? 'active' : '' %>" href="/admin/san-bong">Sân bóng</a>
+  <a class="<%= currentPath.startsWith('/admin/don-dat-san') ? 'active' : '' %>" href="/admin/don-dat-san">Đơn đặt</a>
+  <a class="<%= currentPath.startsWith('/admin/hoa-don') ? 'active' : '' %>" href="/admin/hoa-don">Hóa đơn</a>
+  <a class="<%= currentPath.startsWith('/admin/thong-ke') ? 'active' : '' %>" href="/admin/thong-ke">Thống kê</a>
+</nav>

@@ -1,0 +1,17 @@
+const express = require('express');
+const adminController = require('../controllers/adminController');
+const { requireRole } = require('../middlewares/authMiddleware');
+const router = express.Router();
+router.use('/admin', requireRole('Admin'));
+router.get('/admin', adminController.dashboardPage);
+router.get('/admin/tai-khoan', adminController.accountsPage);
+router.post('/admin/tai-khoan/:accountId/trang-thai', adminController.setAccountStatus);
+router.get('/admin/khu-vuc', adminController.areasPage);
+router.post('/admin/khu-vuc', adminController.createArea);
+router.post('/admin/khu-vuc/:areaId', adminController.updateArea);
+router.post('/admin/khu-vuc/:areaId/xoa', adminController.deleteArea);
+router.get('/admin/san-bong', adminController.pitchesPage);
+router.get('/admin/don-dat-san', adminController.bookingsPage);
+router.get('/admin/hoa-don', adminController.invoicesPage);
+router.get('/admin/thong-ke', adminController.statisticsPage);
+module.exports = router;
