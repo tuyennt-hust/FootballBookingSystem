@@ -3,7 +3,7 @@
     <div>
       <span class="section-kicker section-kicker-light">Chi tiết đơn của chủ sân</span>
       <h1><%= booking.ma_dat_san %></h1>
-      <p>Thông tin khách hàng, lịch sân và hóa đơn được lấy trực tiếp từ PostgreSQL.</p>
+      <p>Kiểm tra thông tin khách hàng, lịch sân và trạng thái hóa đơn trước khi xử lý đơn.</p>
     </div>
     <span class="booking-status-badge booking-status-badge-large <%= booking.bookingStatus.className %>"><%= booking.bookingStatus.label %></span>
   </div>

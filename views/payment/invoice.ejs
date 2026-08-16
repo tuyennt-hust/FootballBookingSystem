@@ -3,7 +3,7 @@
     <div>
       <span class="section-kicker section-kicker-light">Dịch vụ & thanh toán</span>
       <h1>Hóa đơn <%= invoice.ma_dat_san %></h1>
-      <p>Tiền dịch vụ được trigger PostgreSQL cập nhật tự động vào tổng hóa đơn.</p>
+      <p>Thêm dịch vụ cần thiết và kiểm tra tổng chi phí trước khi xác nhận thanh toán.</p>
     </div>
     <span class="payment-badge payment-badge-large <%= invoice.paymentStatus.className %>"><%= invoice.paymentStatus.label %></span>
   </div>
@@ -99,12 +99,12 @@
       <% if (invoice.trang_thai_thanh_toan === 'Da thanh toan') { %>
         <div class="payment-success-box">
           <strong>✓ Đã thanh toán</strong>
-          <p>Hóa đơn đã được ghi nhận thanh toán trong PostgreSQL.</p>
+          <p>Hóa đơn đã được ghi nhận thanh toán thành công.</p>
         </div>
       <% } else if (actionState.canPay) { %>
         <div class="payment-demo-note">
           <strong>Thanh toán mô phỏng</strong>
-          <p>Phần 7 ghi nhận thanh toán trong hệ thống, chưa kết nối VNPay/MoMo/Stripe.</p>
+          <p>Thanh toán hiện được mô phỏng trong hệ thống để phục vụ luồng nghiệp vụ của dự án.</p>
         </div>
         <form action="/dat-san/<%= encodeURIComponent(invoice.ma_dat_san) %>/thanh-toan" method="post" data-confirm="Xác nhận thanh toán <%= formatMoney(invoice.tong_tien) %>?">
           <input type="hidden" name="_csrf" value="<%= csrfToken %>">

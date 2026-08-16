@@ -24,6 +24,4 @@
     <circle cx="65" cy="65" r="63" fill="#fff" opacity=".96"/>
     <path d="m65 22 26 19-10 31H49L39 41l26-19Zm-26 19L11 47 3 76l23 17 23-21-10-31Zm52 0 28 6 8 29-23 17-23-21 10-31ZM26 93l7 30 29 8 3-32-16-27-23 21Zm78 0-7 30-29 8-3-32 16-27 23 21Z" fill="#0f5132"/>
   </g>
-  <rect x="30" y="30" width="210" height="52" rx="26" fill="#fff" opacity=".95"/>
-  <text x="135" y="63" fill="#0b3d25" font-family="Arial, sans-serif" font-size="22" font-weight="700" text-anchor="middle">Sân 7 người</text>
 </svg>

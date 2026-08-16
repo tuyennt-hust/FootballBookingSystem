@@ -1,10 +1,10 @@
-<section class="auth-section">
-  <div class="container auth-grid">
-    <div class="auth-panel">
+<section class="auth-section auth-section-login">
+  <div class="container auth-grid auth-grid-enhanced">
+    <div class="auth-panel auth-panel-login">
       <div class="auth-heading">
         <span class="section-kicker">Chào mừng trở lại</span>
         <h1>Đăng nhập tài khoản</h1>
-        <p>Đăng nhập để quản lý lịch đặt sân và tiếp tục các chức năng dành cho tài khoản của bạn.</p>
+        <p>Đăng nhập để tiếp tục quản lý lịch đặt, hóa đơn và các chức năng phù hợp với vai trò tài khoản của bạn.</p>
       </div>
 
       <% if (formNotice) { %>
@@ -36,7 +36,6 @@
             maxlength="50"
             required
             autofocus
-            placeholder="Ví dụ: khach01"
           >
         </div>
 
@@ -50,7 +49,6 @@
               autocomplete="current-password"
               minlength="6"
               required
-              placeholder="Nhập mật khẩu"
             >
             <button type="button" data-password-toggle="password" aria-label="Hiện mật khẩu">Hiện</button>
           </div>
@@ -65,23 +63,22 @@
         Chưa có tài khoản?
         <a href="/dang-ky">Đăng ký khách hàng</a>
       </p>
-
-      <div class="demo-account">
-        <strong>Tài khoản kiểm thử</strong>
-        <span>Khách hàng: <code>khach01</code> / <code>123456</code></span>
-        <span>Chủ sân: <code>chusan01</code> / <code>123456</code></span>
-        <span>Quản trị viên: <code>admin</code> / <code>123456</code></span>
-      </div>
     </div>
 
-    <aside class="auth-side" aria-label="Lợi ích khi đăng nhập">
-      <span class="auth-side-badge">⚽ Football Booking</span>
-      <h2>Một tài khoản, quản lý toàn bộ hành trình đặt sân.</h2>
-      <ul>
-        <li><span>01</span> Theo dõi lịch đặt sân của bạn</li>
-        <li><span>02</span> Quản lý trạng thái xác nhận và thanh toán</li>
-        <li><span>03</span> Truy cập chức năng đúng theo vai trò</li>
-      </ul>
+    <aside class="auth-side auth-side-photo auth-side-login" aria-label="Thông điệp thương hiệu">
+      <div class="auth-side-media" aria-hidden="true">
+        <img src="/images/auth-login-stadium.webp" alt="" width="900" height="601">
+      </div>
+      <div class="auth-side-content">
+        <span class="auth-side-badge">Football Booking</span>
+        <h2>Sân đẹp, lịch rõ, mọi thao tác gói gọn trong một tài khoản.</h2>
+        <p>Kiểm tra lịch trống, theo dõi xác nhận và quản lý thanh toán trong cùng một trải nghiệm liền mạch.</p>
+        <ul>
+          <li><span>01</span> Theo dõi lịch đặt sân theo thời gian thực</li>
+          <li><span>02</span> Quản lý đơn và hóa đơn ngay trong tài khoản</li>
+          <li><span>03</span> Truy cập đúng tính năng dành cho vai trò của bạn</li>
+        </ul>
+      </div>
     </aside>
   </div>
 </section>

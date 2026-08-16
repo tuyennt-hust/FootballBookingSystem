@@ -1,0 +1,203 @@
+/* FootballBookingSystem v1.0.3 — final desktop/render polish
+   Presentation-only overrides loaded after main.css and ui-v1.css. */
+
+/* Fallback pitch artwork no longer contains its own type label. Keep the
+   operational status clear and away from the top-left visual focal area. */
+.pitch-card-media .status-badge,
+.owner-pitch-media .status-badge {
+  top: 14px;
+  right: 14px;
+  left: auto;
+}
+
+.pitch-card-media img,
+.booking-history-media img,
+.owner-pitch-media img {
+  object-position: center center;
+}
+
+/* Slightly calmer card labels on the discovery page. */
+.pitch-card-heading .eyebrow {
+  color: #708078;
+  letter-spacing: .07em;
+}
+
+/* Owner dashboard: reduce the visual dead-zone after the hero. */
+.owner-dashboard-v2 {
+  padding-top: 48px;
+}
+.owner-dashboard-v2 .dashboard-section-heading {
+  margin-bottom: 26px;
+}
+.owner-stat-card-v2,
+.admin-stat-grid-v2 article {
+  min-width: 0;
+}
+
+/* Admin navigation is a proper persistent control bar rather than the bottom
+   edge of the hero, so it never appears as a cropped strip while scrolling. */
+.admin-hero,
+.admin-hero-compact,
+.admin-hero-v2 {
+  padding-bottom: 30px;
+}
+.admin-subnav-shell {
+  position: sticky;
+  top: 78px;
+  z-index: 35;
+  border-bottom: 1px solid rgba(214, 231, 221, .9);
+  background: linear-gradient(100deg, #073b31, #087a52);
+  box-shadow: 0 8px 24px rgba(5,46,38,.10);
+}
+.admin-subnav-shell .admin-subnav {
+  margin: 0;
+  padding: 8px 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  backdrop-filter: none;
+}
+.admin-subnav-shell .admin-subnav a {
+  min-height: 42px;
+  display: inline-flex;
+  align-items: center;
+  padding-inline: 15px;
+}
+.admin-subnav-shell .admin-subnav a.active {
+  box-shadow: 0 5px 16px rgba(4,32,25,.12);
+}
+.admin-subnav-shell .admin-subnav a.active::after {
+  bottom: 4px;
+}
+.admin-section-v2 {
+  padding-top: 54px;
+}
+
+/* Revenue must remain readable even in the fifth KPI column at laptop widths. */
+.admin-stat-grid-v2 .admin-stat-revenue > strong {
+  max-width: 100%;
+  margin-top: 10px;
+  font-size: clamp(1.55rem, 1.9vw, 2.05rem);
+  line-height: 1;
+  letter-spacing: -.055em;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+.owner-stat-revenue > strong {
+  font-size: clamp(1.8rem, 2.55vw, 2.45rem);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Data-heavy cards keep their contents within the grid track. */
+.admin-stat-grid-v2 article,
+.owner-stat-card-v2,
+.admin-panel-v2,
+.owner-panel-v2 {
+  min-width: 0;
+}
+
+/* Booking history image should never leak/crop metadata from fallback artwork. */
+.booking-history-media {
+  position: relative;
+  overflow: hidden;
+}
+.booking-history-media::after {
+  position: absolute;
+  inset: auto 0 0;
+  height: 22%;
+  pointer-events: none;
+  content: "";
+  background: linear-gradient(180deg, transparent, rgba(5,46,38,.08));
+}
+
+@media (max-width: 1180px) {
+  .admin-stat-grid-v2 {
+    grid-template-columns: repeat(3, minmax(0,1fr));
+  }
+  .admin-stat-grid-v2 .admin-stat-revenue {
+    grid-column: span 2;
+  }
+  .admin-stat-grid-v2 .admin-stat-revenue > strong {
+    font-size: clamp(1.8rem, 3vw, 2.35rem);
+  }
+}
+
+@media (max-width: 900px) {
+  .admin-subnav-shell {
+    top: 72px;
+  }
+  .admin-subnav-shell .container {
+    width: 100%;
+    padding-inline: 14px;
+  }
+  .admin-subnav-shell .admin-subnav {
+    gap: 4px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .admin-subnav-shell .admin-subnav::-webkit-scrollbar { display: none; }
+  .owner-dashboard-v2,
+  .admin-section-v2 {
+    padding-top: 42px;
+  }
+  .booking-history-card {
+    grid-template-columns: 150px minmax(0,1fr);
+  }
+  .booking-history-actions {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 800px) {
+  .admin-stat-grid-v2 {
+    grid-template-columns: repeat(2, minmax(0,1fr));
+  }
+  .admin-stat-grid-v2 .admin-stat-revenue {
+    grid-column: span 2;
+  }
+}
+
+@media (max-width: 640px) {
+  .pitch-card-media .status-badge,
+  .owner-pitch-media .status-badge {
+    top: 10px;
+    right: 10px;
+  }
+  .booking-history-card {
+    display: block;
+  }
+  .booking-history-media {
+    width: 100%;
+    min-height: 0;
+    aspect-ratio: 16 / 8;
+  }
+  .booking-history-content {
+    padding: 18px;
+  }
+  .booking-history-heading {
+    gap: 10px;
+  }
+  .booking-history-facts {
+    grid-template-columns: repeat(2, minmax(0,1fr));
+  }
+  .booking-history-actions {
+    padding: 0 18px 18px;
+  }
+}
+
+@media (max-width: 540px) {
+  .admin-stat-grid-v2 {
+    grid-template-columns: 1fr;
+  }
+  .admin-stat-grid-v2 .admin-stat-revenue {
+    grid-column: auto;
+  }
+  .admin-stat-grid-v2 .admin-stat-revenue > strong,
+  .owner-stat-revenue > strong {
+    font-size: clamp(1.75rem, 8vw, 2.2rem);
+  }
+  .booking-history-facts {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,10 +1,10 @@
-<section class="auth-section">
-  <div class="container auth-grid auth-grid-register">
-    <div class="auth-panel">
+<section class="auth-section auth-section-register">
+  <div class="container auth-grid auth-grid-register auth-grid-enhanced">
+    <div class="auth-panel auth-panel-register">
       <div class="auth-heading">
         <span class="section-kicker">Tài khoản khách hàng</span>
         <h1>Tạo tài khoản mới</h1>
-        <p>Thông tin này được dùng để nhận diện khách hàng và quản lý các đơn đặt sân sau này.</p>
+        <p>Tạo tài khoản để bắt đầu tìm sân, chọn lịch thi đấu phù hợp và theo dõi đơn đặt trong một không gian duy nhất.</p>
       </div>
 
       <% if (formError) { %>
@@ -27,7 +27,6 @@
             maxlength="100"
             required
             autofocus
-            placeholder="Nguyễn Văn A"
           >
         </div>
 
@@ -42,7 +41,6 @@
             inputmode="numeric"
             maxlength="11"
             required
-            placeholder="0987654321"
           >
         </div>
 
@@ -58,7 +56,6 @@
             maxlength="50"
             pattern="[A-Za-z0-9._]+"
             required
-            placeholder="Chữ, số, dấu chấm hoặc gạch dưới"
           >
         </div>
 
@@ -73,7 +70,6 @@
                 autocomplete="new-password"
                 minlength="6"
                 required
-                placeholder="Tối thiểu 6 ký tự"
               >
               <button type="button" data-password-toggle="password" aria-label="Hiện mật khẩu">Hiện</button>
             </div>
@@ -89,7 +85,6 @@
                 autocomplete="new-password"
                 minlength="6"
                 required
-                placeholder="Nhập lại mật khẩu"
               >
               <button type="button" data-password-toggle="confirmPassword" aria-label="Hiện mật khẩu">Hiện</button>
             </div>
@@ -107,16 +102,14 @@
       </p>
     </div>
 
-    <aside class="auth-side auth-side-register" aria-label="Thông tin đăng ký">
-      <span class="auth-side-badge">Tạo tài khoản miễn phí</span>
-      <h2>Sẵn sàng đặt sân trong vài bước đơn giản.</h2>
-      <p>Tài khoản đăng ký tại đây mặc định có vai trò <strong>Khách hàng</strong>.</p>
-      <div class="security-note">
-        <span aria-hidden="true">🔒</span>
-        <div>
-          <strong>Mật khẩu được bảo vệ</strong>
-          <small>Tài khoản mới được lưu bằng mã băm bcrypt, không lưu mật khẩu dạng rõ.</small>
-        </div>
+    <aside class="auth-side auth-side-photo auth-side-register" aria-label="Thông tin đăng ký">
+      <div class="auth-side-media" aria-hidden="true">
+        <img src="/images/auth-login-stadium.webp" alt="" width="900" height="601">
+      </div>
+      <div class="auth-side-content">
+        <span class="auth-side-badge">Tạo tài khoản miễn phí</span>
+        <h2>Bắt đầu hành trình đặt sân với một tài khoản gọn gàng và bảo mật.</h2>
+        <p>Tài khoản mới sẽ được tạo với vai trò <strong>Khách hàng</strong> để bạn có thể đặt sân, chọn thêm dịch vụ và theo dõi thanh toán ngay sau khi đăng ký.</p>
       </div>
     </aside>
   </div>

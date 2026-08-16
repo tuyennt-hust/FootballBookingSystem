@@ -1,44 +1,169 @@
 # FootballBookingSystem
 
-Hệ thống quản lý và đặt sân bóng sử dụng **Node.js + Express + EJS + PostgreSQL**, tổ chức theo kiến trúc:
+A role-based football pitch booking and management platform built with **Node.js, Express, EJS, and PostgreSQL**.
+
+The project covers the complete booking flow for customers, pitch owners, and administrators: pitch discovery, availability checking, booking, services, invoicing, payment simulation, owner operations, and system-wide administration.
+
+> Current stable development version: **v1.0.4**  
+> Automated tests: **51 / 51 passed**
+
+## Highlights
+
+- Role-based experience for **Customer / Pitch Owner / Admin**.
+- PostgreSQL functions and triggers are used for core booking and billing rules.
+- Layered backend architecture: `Route -> Middleware -> Controller -> Service -> Repository -> PostgreSQL`.
+- Session authentication stored in PostgreSQL.
+- Password hashing with bcrypt.
+- CSRF protection and security headers.
+- Responsive server-rendered UI with EJS.
+- Pitch image upload support.
+- Automated project audit, structure verification, unit tests, and database smoke checks.
+
+## Product Roles
+
+### Customer
+
+- Register, sign in, and manage an account.
+- Search pitches by keyword, area, pitch type, and price.
+- View pitch details and available time slots.
+- Create and cancel eligible bookings.
+- Track booking history and booking status.
+- Add optional services to a confirmed booking.
+- View invoices and complete simulated payments.
+
+### Pitch Owner
+
+- View an operational dashboard.
+- Create and update owned pitches.
+- Upload pitch cover images.
+- Change pitch operating status.
+- Review bookings belonging to owned pitches.
+- Confirm pending bookings.
+- Track paid revenue and upcoming activity.
+
+### Administrator
+
+- View platform-level operational metrics.
+- Search, lock, and unlock accounts.
+- Manage service areas.
+- Monitor pitches, bookings, and invoices.
+- Review customer, revenue, service, and cancellation statistics.
+
+## Tech Stack
+
+| Layer | Technology |
+|---|---|
+| Runtime | Node.js |
+| Web framework | Express.js |
+| Server-side UI | EJS + HTML/CSS/JavaScript |
+| Database | PostgreSQL |
+| Database client | `pg` |
+| Authentication | `express-session` + `connect-pg-simple` |
+| Password hashing | `bcryptjs` |
+| File upload | Multer 2.x |
+| Development | Nodemon |
+| Testing | Node.js built-in test runner |
+
+## Architecture
+
+The application follows a layered architecture so HTTP concerns, business rules, and SQL access stay separated.
 
 ```text
-Route -> Middleware -> Controller -> Service -> Repository -> PostgreSQL
+Browser
+  |
+  v
+Routes
+  |
+  v
+Middleware
+  |
+  v
+Controllers
+  |
+  v
+Services
+  |
+  v
+Repositories
+  |
+  v
+PostgreSQL
 ```
 
-Phiên bản hoàn thiện theo kế hoạch 9 phần: **v0.9.0**.
+![System architecture](diagrams/Architecture.png)
 
-## Chức năng
+More diagrams are available in [`diagrams/`](diagrams/), including the ERD, use cases, and booking sequence.
 
-### Khách hàng
+## Database Design
 
-- Đăng ký/đăng nhập/đăng xuất.
-- Tìm sân theo từ khóa, khu vực, loại sân và giá.
-- Xem chi tiết sân và khung giờ trống.
-- Đặt sân, xem lịch sử, hủy đơn hợp lệ.
-- Chọn dịch vụ và thanh toán mô phỏng.
+The database contains the main entities for accounts, customers, owners, areas, pitches, time slots, bookings, services, booking service details, and payments.
 
-### Chủ sân
+Core database logic includes:
 
-- Dashboard.
-- Quản lý sân, giá, trạng thái và ảnh đại diện.
-- Xem đơn thuộc sân của mình.
-- Xác nhận đơn.
-- Theo dõi doanh thu đã thanh toán.
+- booking conflict validation;
+- automatic pitch fee calculation;
+- automatic invoice creation;
+- service line total calculation;
+- invoice total synchronization;
+- booking confirmation and cancellation;
+- payment status updates.
 
-### Admin
+![Database ERD](diagrams/ERD.png)
 
-- Dashboard toàn hệ thống.
-- Khóa/mở khóa tài khoản.
-- Quản lý khu vực.
-- Theo dõi sân, booking, hóa đơn.
-- Báo cáo doanh thu/khách hàng/dịch vụ/tỷ lệ hủy.
+See [`docs/Database.md`](docs/Database.md) for the database overview and SQL organization.
 
-## Cấu trúc
+## Security
+
+The project includes:
+
+- bcrypt password hashing;
+- PostgreSQL-backed sessions;
+- CSRF tokens for state-changing forms;
+- role-based authorization middleware;
+- parameterized SQL access;
+- Content Security Policy;
+- `X-Frame-Options`, `X-Content-Type-Options`, `Referrer-Policy`, and `Permissions-Policy` headers;
+- `Cache-Control: no-store` for authenticated and sensitive pages;
+- request body limits;
+- production validation for database credentials and session secrets.
+
+See [`docs/Security.md`](docs/Security.md) for details.
+
+## Testing and Quality Checks
+
+The current project passes **51 / 51 automated tests**.
+
+Useful commands:
+
+```bash
+npm test
+npm run verify
+npm run audit
+npm run check
+npm run db:check
+```
+
+- `npm test` runs unit tests.
+- `npm run verify` validates project structure, internal imports, and EJS syntax.
+- `npm run audit` checks security and architecture invariants.
+- `npm run check` runs verify + audit + unit tests.
+- `npm run db:check` performs checks against the configured PostgreSQL database.
+
+See [`docs/TestPlan.md`](docs/TestPlan.md) for the test strategy.
+
+## Project Structure
 
 ```text
 FootballBookingSystem/
-├── database/
+├── database/                 # Schema, seed data, functions, triggers, views, migrations
+├── diagrams/                 # ERD, use case, architecture, booking sequence
+├── docs/                     # API, database, deployment, security, tests, user guide
+├── public/
+│   ├── css/
+│   ├── images/
+│   ├── js/
+│   └── uploads/              # Runtime uploads are ignored by Git
+├── scripts/                  # Verify, audit, database checks
 ├── src/
 │   ├── config/
 │   ├── controllers/
@@ -47,20 +172,34 @@ FootballBookingSystem/
 │   ├── routes/
 │   ├── services/
 │   └── utils/
-├── public/
-├── views/
-├── diagrams/
-├── docs/
-├── scripts/
 ├── tests/
+│   ├── database/
+│   └── unit/
+├── views/
 ├── .env.example
 ├── package.json
 └── README.md
 ```
 
-## 1. Tạo database mới
+## Getting Started
 
-```powershell
+### Prerequisites
+
+- Node.js 20+
+- PostgreSQL 15+
+- npm
+
+### 1. Clone and install
+
+```bash
+git clone https://github.com/tuyennt-hust/FootballBookingSystem.git
+cd FootballBookingSystem
+npm install
+```
+
+### 2. Create the database
+
+```bash
 psql -U postgres -c "CREATE DATABASE dat_san_bong;"
 psql -U postgres -d dat_san_bong -v ON_ERROR_STOP=1 -f database/01_schema.sql
 psql -U postgres -d dat_san_bong -v ON_ERROR_STOP=1 -f database/02_seed.sql
@@ -69,88 +208,95 @@ psql -U postgres -d dat_san_bong -v ON_ERROR_STOP=1 -f database/04_triggers.sql
 psql -U postgres -d dat_san_bong -v ON_ERROR_STOP=1 -f database/05_views.sql
 ```
 
-Không chạy `06_queries.sql` hoặc `07_big_data.sql` khi chỉ muốn khởi tạo app.
+`06_queries.sql` and `07_big_data.sql` are not required for normal application startup.
 
-## 2. Environment
+### 3. Configure environment variables
+
+Windows PowerShell:
 
 ```powershell
 Copy-Item .env.example .env
 ```
 
-Sửa ít nhất `DB_PASSWORD` và `SESSION_SECRET`.
+Linux/macOS:
 
-## 3. Cài và chạy
+```bash
+cp .env.example .env
+```
 
-```powershell
-npm install
+Update at least:
+
+```env
+DB_PASSWORD=your_postgresql_password
+SESSION_SECRET=replace_with_a_long_random_secret
+```
+
+### 4. Start the application
+
+```bash
 npm run dev
 ```
 
-Mở:
+Open:
 
 ```text
 http://localhost:3000
 http://localhost:3000/api/health
 ```
 
-## 4. Kiểm tra toàn project
+## Demo Accounts
 
-```powershell
-npm run check
-npm run db:check
-```
+The seed database includes local demo accounts:
 
-Trong đó:
+| Role | Username | Password |
+|---|---|---|
+| Customer | `khach01` | `123456` |
+| Pitch Owner | `chusan01` | `123456` |
+| Admin | `admin` | `123456` |
 
-- `npm run verify`: kiểm tra cấu trúc/import/EJS.
-- `npm run audit`: security + CSRF + artifact + architecture audit.
-- `npm test`: unit tests.
-- `npm run db:check`: kiểm tra database thật và các bất biến dữ liệu.
+These credentials are intended for **local/demo use only**.
 
-## 5. Tài khoản demo
+## Main Routes
 
-```text
-Khách hàng: khach01 / 123456
-Chủ sân:    chusan01 / 123456
-Admin:      admin / 123456
-```
+| Route | Purpose |
+|---|---|
+| `/` | Home page |
+| `/san-bong` | Pitch discovery |
+| `/dang-nhap` | Sign in |
+| `/dang-ky` | Customer registration |
+| `/lich-su-dat-san` | Customer booking history |
+| `/chu-san` | Pitch owner dashboard |
+| `/admin` | Admin dashboard |
+| `/api/health` | Application/database health check |
 
-Chỉ dùng cho local/demo. Mật khẩu seed được nâng cấp sang bcrypt sau lần đăng nhập thành công đầu tiên.
+API details are documented in [`docs/API.md`](docs/API.md).
 
-## 6. Đường dẫn chính
+## Documentation
 
-```text
-/                         Trang chủ
-/san-bong                 Tìm sân
-/dang-nhap                Đăng nhập
-/dang-ky                  Đăng ký
-/lich-su-dat-san          Booking của khách
-/chu-san                  Dashboard chủ sân
-/admin                    Dashboard Admin
-/api/health               Health check
-```
+- [`docs/API.md`](docs/API.md) — API reference
+- [`docs/Database.md`](docs/Database.md) — database design and SQL organization
+- [`docs/Deployment.md`](docs/Deployment.md) — deployment guide
+- [`docs/Security.md`](docs/Security.md) — security controls
+- [`docs/TestPlan.md`](docs/TestPlan.md) — testing strategy
+- [`docs/UIUX.md`](docs/UIUX.md) — UI/UX design notes
+- [`docs/UserGuide.md`](docs/UserGuide.md) — user workflows
+- [`docs/README.md`](docs/README.md) — documentation index
 
-## 7. Tài liệu
+## Known Limitations
 
-- `docs/API.md`
-- `docs/Database.md`
-- `docs/UserGuide.md`
-- `docs/Deployment.md`
-- `docs/TestPlan.md`
-- `docs/Security.md`
-- `docs/Part09-Finalization.md`
+- Payment is simulated inside the application; no real payment gateway is integrated yet.
+- Uploaded pitch images are stored on the local filesystem rather than object/cloud storage.
+- The current UI is primarily Vietnamese.
+- Email/SMS/push notifications are not implemented.
 
-## 8. Sơ đồ
+## Possible Next Improvements
 
-- `diagrams/ERD.png`
-- `diagrams/UseCase.png`
-- `diagrams/Architecture.png`
-- `diagrams/SequenceBooking.png`
+- VNPay/MoMo/Stripe payment integration.
+- Cloud image storage such as S3-compatible object storage.
+- Booking confirmation notifications.
+- Production deployment with CI/CD.
+- Additional integration and end-to-end tests.
 
-## 9. Ảnh sân
+## Development Status
 
-Project chạy với SVG mặc định. Chủ sân có thể upload JPG/PNG/WebP tối đa 5 MB; ảnh runtime nằm trong `public/uploads/pitches/` và không được commit vào Git.
-
-## Production
-
-Xem `docs/Deployment.md` và `docs/Security.md`. Production yêu cầu HTTPS, `SESSION_SECRET` mạnh và `DB_PASSWORD` không rỗng.
+The core booking system, owner operations, admin operations, security checks, responsive UI, and automated test suite are complete. Future work is focused on presentation assets, deployment, and optional integrations rather than core booking functionality.

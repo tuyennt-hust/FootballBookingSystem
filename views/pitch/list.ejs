@@ -2,8 +2,8 @@
   <div class="container page-hero-inner">
     <div>
       <span class="section-kicker section-kicker-light">Danh sách sân</span>
-      <h1>Tìm sân bóng phù hợp</h1>
-      <p>Lọc dữ liệu theo tên, địa điểm, khu vực và loại sân.</p>
+      <h1>Tìm sân cho trận tiếp theo</h1>
+      <p>So sánh nhanh vị trí, loại sân và mức giá để chọn lựa phù hợp.</p>
     </div>
     <div class="page-hero-icon" aria-hidden="true">⚽</div>
   </div>
@@ -57,7 +57,7 @@
 
     <div class="listing-toolbar">
       <div>
-        <h2><%= pagination.totalItems %> sân đang hoạt động</h2>
+        <h2><%= pagination.totalItems %> sân sẵn sàng để khám phá</h2>
         <p>Trang <%= pagination.page %> / <%= pagination.totalPages %></p>
       </div>
       <% if (filters.keyword || filters.areaId || filters.pitchType) { %>

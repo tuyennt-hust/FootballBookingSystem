@@ -4,7 +4,7 @@
     <div>
       <span class="section-kicker section-kicker-light"><%= isEdit ? 'Chỉnh sửa sân' : 'Thêm sân mới' %></span>
       <h1><%= isEdit ? pitch.ten_san : 'Tạo sân bóng' %></h1>
-      <p>Ảnh được lưu trong public/uploads/pitches; thông tin còn lại lưu trên PostgreSQL.</p>
+      <p>Cập nhật thông tin hiển thị cho sân và sử dụng ảnh ngang, rõ nét để khách hàng dễ lựa chọn.</p>
     </div>
   </div>
 </section>
@@ -90,7 +90,7 @@
       <ul>
         <li>Dùng ảnh thật, đủ sáng và không có watermark lớn.</li>
         <li>Ảnh upload mới sẽ thay ảnh cũ sau khi cập nhật thành công.</li>
-        <li>Nếu chưa có ảnh, hệ thống dùng SVG mặc định theo loại sân.</li>
+        <li>Nếu chưa có ảnh, hệ thống sẽ sử dụng ảnh minh họa mặc định theo loại sân.</li>
       </ul>
     </aside>
   </div>

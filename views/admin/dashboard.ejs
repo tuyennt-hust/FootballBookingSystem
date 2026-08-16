@@ -1,20 +1,95 @@
-<section class="admin-hero"><div class="container"><span class="section-kicker section-kicker-light">ADMIN CONTROL CENTER</span><h1>Tổng quan hệ thống</h1><p>Theo dõi tài khoản, sân, đơn đặt và doanh thu từ một nơi.</p><%- include('_nav') %></div></section>
-<section class="section admin-section"><div class="container">
-  <div class="admin-stat-grid">
-    <article><span>Tài khoản</span><strong><%= stats.totalAccounts %></strong><small><%= stats.lockedAccounts %> bị khóa</small></article>
-    <article><span>Sân bóng</span><strong><%= stats.totalPitches %></strong><small><%= stats.activePitches %> hoạt động</small></article>
-    <article><span>Đơn đặt</span><strong><%= stats.totalBookings %></strong><small><%= stats.pendingBookings %> chờ xác nhận</small></article>
-    <article><span>Chưa thanh toán</span><strong><%= stats.unpaidInvoices %></strong><small>hóa đơn cần theo dõi</small></article>
-    <article class="admin-stat-revenue"><span>Doanh thu đã thu</span><strong><%= formatMoney(stats.paidRevenue) %></strong><small>từ hóa đơn đã thanh toán</small></article>
+<section class="admin-hero admin-hero-v2">
+  <div class="container">
+    <span class="section-kicker section-kicker-light">Trung tâm quản trị</span>
+    <h1>Tổng quan hệ thống</h1>
+    <p>Theo dõi tài khoản, sân bóng, đơn đặt và dòng tiền từ một trung tâm điều hành.</p>
+    
   </div>
-  <div class="admin-dashboard-grid">
-    <article class="admin-panel"><div class="admin-panel-head"><div><span class="section-kicker">Tài khoản</span><h2>Cơ cấu người dùng</h2></div><a href="/admin/tai-khoan">Quản lý →</a></div>
-      <div class="admin-role-list"><div><span>Khách hàng</span><strong><%= roleCounts['Khach hang'] || 0 %></strong></div><div><span>Chủ sân</span><strong><%= roleCounts['Chu san'] || 0 %></strong></div><div><span>Quản trị viên</span><strong><%= roleCounts.Admin || 0 %></strong></div></div>
-    </article>
-    <article class="admin-panel"><div class="admin-panel-head"><div><span class="section-kicker">Truy cập nhanh</span><h2>Tác vụ quản trị</h2></div></div><div class="admin-quick-grid"><a href="/admin/khu-vuc">Quản lý khu vực</a><a href="/admin/san-bong">Kiểm tra sân</a><a href="/admin/hoa-don?status=Chua+thanh+toan">Hóa đơn chưa thu</a><a href="/admin/thong-ke">Mở báo cáo</a></div></article>
+</section>
+<div class="admin-subnav-shell"><div class="container"><%- include('_nav') %></div></div>
+
+<section class="section admin-section admin-section-v2">
+  <div class="container">
+    <div class="dashboard-section-heading">
+      <div>
+        <span class="section-kicker">Chỉ số vận hành</span>
+        <h2>Toàn cảnh nền tảng</h2>
+      </div>
+      <span class="dashboard-date-note">Số liệu tổng hợp hiện tại</span>
+    </div>
+
+    <div class="admin-stat-grid admin-stat-grid-v2">
+      <article class="admin-stat-card-v2">
+        <div class="metric-card-top"><span class="metric-icon metric-icon-green"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="3.5"></circle><path d="M5 20c.8-4 3.2-6 7-6s6.2 2 7 6"></path></svg></span><span class="metric-trend">Người dùng</span></div>
+        <span>Tài khoản</span><strong><%= stats.totalAccounts %></strong><small><%= stats.lockedAccounts %> tài khoản bị khóa</small>
+      </article>
+      <article class="admin-stat-card-v2">
+        <div class="metric-card-top"><span class="metric-icon metric-icon-blue"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="M12 5v14"></path><circle cx="12" cy="12" r="2.5"></circle></svg></span><span class="metric-trend">Tài nguyên</span></div>
+        <span>Sân bóng</span><strong><%= stats.totalPitches %></strong><small><%= stats.activePitches %> sân hoạt động</small>
+      </article>
+      <article class="admin-stat-card-v2">
+        <div class="metric-card-top"><span class="metric-icon metric-icon-purple"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4v3M18 4v3M4 9h16"></path><rect x="4" y="6" width="16" height="14" rx="2"></rect><path d="m9 14 2 2 4-4"></path></svg></span><span class="metric-trend">Giao dịch</span></div>
+        <span>Đơn đặt</span><strong><%= stats.totalBookings %></strong><small><%= stats.pendingBookings %> đơn chờ xác nhận</small>
+      </article>
+      <article class="admin-stat-card-v2 admin-stat-warning-v2">
+        <div class="metric-card-top"><span class="metric-icon metric-icon-amber"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2V3Z"></path><path d="M9 8h6M9 12h6"></path></svg></span><span class="metric-trend">Cần theo dõi</span></div>
+        <span>Chưa thanh toán</span><strong><%= stats.unpaidInvoices %></strong><small>Hóa đơn cần theo dõi</small>
+      </article>
+      <article class="admin-stat-card-v2 admin-stat-revenue">
+        <div class="metric-card-top"><span class="metric-icon metric-icon-light"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7.5h15a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-11a2 2 0 0 1 2-2h12"></path><path d="M16 12h5v4h-5a2 2 0 0 1 0-4Z"></path></svg></span><span class="metric-trend metric-trend-light">Doanh thu</span></div>
+        <span>Doanh thu đã thu</span><strong><%= formatMoney(stats.paidRevenue) %></strong><small>Từ hóa đơn đã thanh toán</small>
+      </article>
+    </div>
+
+    <div class="admin-dashboard-grid admin-dashboard-grid-v2">
+      <article class="admin-panel admin-panel-v2">
+        <div class="admin-panel-head">
+          <div><span class="section-kicker">Tài khoản</span><h2>Cơ cấu người dùng</h2><p class="panel-description">Phân bổ tài khoản theo nhóm vai trò đang sử dụng hệ thống.</p></div>
+          <a href="/admin/tai-khoan">Quản lý →</a>
+        </div>
+        <div class="admin-role-list admin-role-list-v2">
+          <div><span class="role-icon role-customer" aria-hidden="true">K</span><span>Khách hàng</span><strong><%= roleCounts['Khach hang'] || 0 %></strong></div>
+          <div><span class="role-icon role-owner" aria-hidden="true">C</span><span>Chủ sân</span><strong><%= roleCounts['Chu san'] || 0 %></strong></div>
+          <div><span class="role-icon role-admin" aria-hidden="true">Q</span><span>Quản trị viên</span><strong><%= roleCounts.Admin || 0 %></strong></div>
+        </div>
+      </article>
+
+      <article class="admin-panel admin-panel-v2">
+        <div class="admin-panel-head"><div><span class="section-kicker">Truy cập nhanh</span><h2>Tác vụ quản trị</h2><p class="panel-description">Đi thẳng tới các khu vực thường dùng trong quá trình vận hành.</p></div></div>
+        <div class="admin-quick-grid admin-quick-grid-v2">
+          <a href="/admin/khu-vuc"><span class="quick-icon" aria-hidden="true">⌖</span><span><strong>Quản lý khu vực</strong><small>Thêm, sửa và kiểm tra khu vực</small></span></a>
+          <a href="/admin/san-bong"><span class="quick-icon" aria-hidden="true">▱</span><span><strong>Kiểm tra sân</strong><small>Theo dõi trạng thái sân bóng</small></span></a>
+          <a href="/admin/hoa-don?status=Chua+thanh+toan"><span class="quick-icon" aria-hidden="true">₫</span><span><strong>Hóa đơn chưa thu</strong><small>Xử lý các khoản còn tồn</small></span></a>
+          <a href="/admin/thong-ke"><span class="quick-icon" aria-hidden="true">↗</span><span><strong>Mở báo cáo</strong><small>Xem doanh thu và hiệu suất</small></span></a>
+        </div>
+      </article>
+    </div>
+
+    <div class="admin-panel admin-panel-v2 admin-table-panel admin-table-panel-v2">
+      <div class="admin-panel-head">
+        <div><span class="section-kicker">Mới nhất</span><h2>Đơn đặt sân gần đây</h2><p class="panel-description">Danh sách các đơn mới nhất trên toàn hệ thống.</p></div>
+        <a href="/admin/don-dat-san">Xem tất cả →</a>
+      </div>
+      <div class="admin-table-wrap dashboard-table-wrap">
+        <table class="admin-table dashboard-table">
+          <thead><tr><th>Mã đơn</th><th>Khách hàng</th><th>Sân</th><th>Chủ sân</th><th>Ngày / giờ</th><th>Đơn</th><th>Thanh toán</th><th>Tổng tiền</th></tr></thead>
+          <tbody>
+            <% recentBookings.forEach((b)=>{ %>
+              <tr>
+                <td><strong class="table-code"><%= b.ma_dat_san %></strong></td>
+                <td><strong><%= b.ten_khach_hang %></strong></td>
+                <td><%= b.ten_san %></td>
+                <td><%= b.ten_chu_san %></td>
+                <td><%= b.ngay_dat_label %><br><small><%= b.timeLabel %></small></td>
+                <td><span class="admin-badge <%= b.bookingStatus.tone %>"><%= b.bookingStatus.label %></span></td>
+                <td><span class="admin-badge <%= b.paymentStatus.tone %>"><%= b.paymentStatus.label %></span></td>
+                <td><strong><%= formatMoney(b.tong_tien) %></strong></td>
+              </tr>
+            <% }) %>
+            <% if (!recentBookings.length) { %><tr><td colspan="8" class="admin-empty">Chưa có đơn đặt sân.</td></tr><% } %>
+          </tbody>
+        </table>
+      </div>
+    </div>
   </div>
-  <div class="admin-panel admin-table-panel"><div class="admin-panel-head"><div><span class="section-kicker">Mới nhất</span><h2>Đơn đặt sân gần đây</h2></div><a href="/admin/don-dat-san">Xem tất cả →</a></div><div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>Mã đơn</th><th>Khách hàng</th><th>Sân</th><th>Chủ sân</th><th>Ngày / giờ</th><th>Đơn</th><th>Thanh toán</th><th>Tổng tiền</th></tr></thead><tbody>
-  <% recentBookings.forEach((b)=>{ %><tr><td><strong><%= b.ma_dat_san %></strong></td><td><%= b.ten_khach_hang %></td><td><%= b.ten_san %></td><td><%= b.ten_chu_san %></td><td><%= b.ngay_dat_label %><br><small><%= b.timeLabel %></small></td><td><span class="admin-badge <%= b.bookingStatus.tone %>"><%= b.bookingStatus.label %></span></td><td><span class="admin-badge <%= b.paymentStatus.tone %>"><%= b.paymentStatus.label %></span></td><td><%= formatMoney(b.tong_tien) %></td></tr><% }) %>
-  <% if (!recentBookings.length) { %><tr><td colspan="8" class="admin-empty">Chưa có đơn đặt sân.</td></tr><% } %>
-  </tbody></table></div></div>
-</div></section>
+</section>

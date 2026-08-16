@@ -28,7 +28,7 @@ function compileEjsFallback(source) {
 }
 
 const requiredFiles = [
-  'VERSION', 'CHANGELOG.md', 'UPDATE_MANIFEST.md', 'README.md',
+  'VERSION', 'CHANGELOG.md', 'README.md', 'docs/README.md', 'docs/UIUX.md', 'public/css/ui-v1.css', 'public/css/ui-v3.css',
   'src/app.js', 'src/server.js',
   'src/middlewares/authMiddleware.js', 'src/middlewares/csrfMiddleware.js',
   'src/middlewares/securityMiddleware.js', 'src/middlewares/uploadMiddleware.js',
@@ -49,7 +49,11 @@ requiredFiles.forEach(assertFile);
 const packageJson = JSON.parse(fs.readFileSync(assertFile('package.json'), 'utf8'));
 const version = fs.readFileSync(assertFile('VERSION'), 'utf8').trim();
 if (packageJson.version !== version) fail(`VERSION (${version}) không khớp package.json (${packageJson.version})`);
-if (version !== '0.9.0') fail(`Phần 9 yêu cầu VERSION 0.9.0, hiện tại ${version}`);
+if (version !== '1.0.4') fail(`Portfolio repository yêu cầu VERSION 1.0.4, hiện tại ${version}`);
+
+
+const layoutSource = fs.readFileSync(assertFile('views/layouts/main.ejs'), 'utf8');
+if (!layoutSource.includes('/css/ui-v1.css')) fail('Layout chưa load lớp UI/UX v1.0.');
 
 const jsFiles = walk(absolute('src'), '.js').concat(walk(absolute('scripts'), '.js'));
 for (const jsFile of jsFiles) {
@@ -116,4 +120,4 @@ console.log(`[VERIFY] FootballBookingSystem v${version}`);
 console.log(`[VERIFY] ${jsFiles.length} file JavaScript có liên kết nội bộ hợp lệ.`);
 console.log(`[VERIFY] ${viewFiles.length} file EJS ${ejs ? 'compile bằng EJS' : 'kiểm tra delimiter fallback'} thành công.`);
 console.log(`[VERIFY] Runtime load: ${canLoadRuntime ? 'đã kiểm tra dependency thật' : 'bỏ qua vì chưa npm install'}.`);
-console.log('[VERIFY] Cấu trúc Phần 1-9 đầy đủ.');
+console.log('[VERIFY] Cấu trúc ứng dụng, tài liệu portfolio và lớp UI/UX v1.0.4 đầy đủ.');

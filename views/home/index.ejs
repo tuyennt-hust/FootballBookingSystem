@@ -1,9 +1,9 @@
 <section class="hero-section">
   <div class="container hero-grid">
     <div class="hero-content">
-      <span class="section-kicker">Nền tảng đặt sân trực tuyến</span>
-      <h1>Tìm sân phù hợp.<br><span>Đặt lịch nhanh chóng.</span></h1>
-      <p>Tra cứu sân đang hoạt động theo khu vực và loại sân. Thông tin giá thuê, địa chỉ và chủ sân được hiển thị rõ ràng từ cơ sở dữ liệu.</p>
+      <span class="section-kicker">Đặt sân bóng trực tuyến</span>
+      <h1>Chọn đúng sân.<br><span>Ra sân đúng giờ.</span></h1>
+      <p>Tìm sân theo khu vực và loại sân, xem lịch trống theo thời gian thực, đặt lịch và theo dõi thanh toán trong một trải nghiệm liền mạch.</p>
 
       <form class="hero-search" action="/san-bong" method="get">
         <div class="field-group">
@@ -28,7 +28,7 @@
       </form>
 
       <div class="hero-stats" aria-label="Thống kê hệ thống">
-        <div><strong><%= stats.so_san_hoat_dong %>+</strong><span>Sân hoạt động</span></div>
+        <div><strong><%= stats.so_san_hoat_dong %>+</strong><span>Sân sẵn sàng</span></div>
         <div><strong><%= stats.so_khu_vuc %>+</strong><span>Khu vực</span></div>
         <div><strong><%= stats.so_chu_san %>+</strong><span>Chủ sân</span></div>
       </div>
@@ -36,15 +36,36 @@
 
     <div class="hero-visual" aria-hidden="true">
       <div class="hero-glow"></div>
-      <img src="/images/hero-football.svg" alt="">
+      <img src="/images/home-hero-stadium.jpg" alt="Sân bóng" />
       <div class="floating-card floating-card-top">
         <span>✓</span>
-        <div><strong>Dữ liệu trực tiếp</strong><small>Từ PostgreSQL</small></div>
+        <div><strong>Lịch trống rõ ràng</strong><small>Chọn ca trước khi đặt</small></div>
       </div>
       <div class="floating-card floating-card-bottom">
         <span>⚽</span>
-        <div><strong>Đặt sân tiện lợi</strong><small>Quản lý rõ ràng</small></div>
+        <div><strong>Đặt sân nhanh</strong><small>Theo dõi trong tài khoản</small></div>
       </div>
+    </div>
+  </div>
+</section>
+
+<section class="home-proof" aria-label="Ưu điểm nổi bật">
+  <div class="container home-proof-inner">
+    <div class="home-proof-item">
+      <span class="home-proof-icon">⌕</span>
+      <span class="home-proof-copy"><strong>Tìm kiếm linh hoạt</strong><span>Lọc theo khu vực, loại sân và giá</span></span>
+    </div>
+    <div class="home-proof-item">
+      <span class="home-proof-icon">◷</span>
+      <span class="home-proof-copy"><strong>Lịch sân minh bạch</strong><span>Phân biệt ca trống, đã đặt và giờ điểm</span></span>
+    </div>
+    <div class="home-proof-item">
+      <span class="home-proof-icon">✓</span>
+      <span class="home-proof-copy"><strong>Quản lý tập trung</strong><span>Đơn đặt, dịch vụ và hóa đơn cùng một nơi</span></span>
+    </div>
+    <div class="home-proof-item">
+      <span class="home-proof-icon">⌁</span>
+      <span class="home-proof-copy"><strong>Trải nghiệm đa vai trò</strong><span>Khách hàng, chủ sân và quản trị viên</span></span>
     </div>
   </div>
 </section>
@@ -53,9 +74,9 @@
   <div class="container">
     <div class="section-heading heading-row">
       <div>
-        <span class="section-kicker">Sân nổi bật</span>
-        <h2 id="featured-title">Khám phá sân đang hoạt động</h2>
-        <p>Các sân bên dưới được đọc trực tiếp từ bảng <code>san_bong</code>.</p>
+        <span class="section-kicker">Gợi ý cho bạn</span>
+        <h2 id="featured-title">Những sân đang sẵn sàng nhận lịch</h2>
+        <p>Khám phá nhanh các sân đang hoạt động và mở trang chi tiết để chọn ngày, khung giờ phù hợp.</p>
       </div>
       <a class="text-link" href="/san-bong">Xem tất cả sân <span>→</span></a>
     </div>
@@ -69,7 +90,7 @@
     <% } else { %>
       <div class="empty-state">
         <h3>Chưa có sân đang hoạt động</h3>
-        <p>Hãy kiểm tra dữ liệu trong bảng <code>san_bong</code>.</p>
+        <p>Danh sách sẽ xuất hiện khi chủ sân bật trạng thái hoạt động cho sân.</p>
       </div>
     <% } %>
   </div>
@@ -78,30 +99,36 @@
 <section class="section section-muted" id="quy-trinh" aria-labelledby="process-title">
   <div class="container">
     <div class="section-heading centered">
-      <span class="section-kicker">Quy trình đơn giản</span>
-      <h2 id="process-title">Ba bước để có một trận bóng</h2>
-      <p>Phần giao diện đặt sân chi tiết sẽ được kết nối ở các phần nghiệp vụ tiếp theo.</p>
+      <span class="section-kicker">Đặt sân dễ dàng</span>
+      <h2 id="process-title">Ba bước từ tìm sân đến xác nhận lịch</h2>
+      <p>Luồng đặt sân được thiết kế ngắn gọn để bạn kiểm tra đủ thông tin trước khi xác nhận.</p>
     </div>
 
     <div class="process-grid">
       <article class="process-card">
         <span class="process-number">01</span>
         <div class="process-icon">⌕</div>
-        <h3>Tìm sân</h3>
-        <p>Lọc danh sách theo khu vực, loại sân hoặc tên sân mong muốn.</p>
+        <h3>Tìm sân phù hợp</h3>
+        <p>Chọn khu vực, loại sân hoặc tìm theo tên và địa chỉ để thu hẹp kết quả.</p>
       </article>
       <article class="process-card">
         <span class="process-number">02</span>
-        <div class="process-icon">▣</div>
-        <h3>Chọn lịch</h3>
-        <p>Chọn ngày và khung giờ còn trống phù hợp với đội bóng.</p>
+        <div class="process-icon">◷</div>
+        <h3>Chọn ngày và ca</h3>
+        <p>Xem lịch trống, giá ca thường hoặc giờ điểm rồi chọn thời gian phù hợp với đội.</p>
       </article>
       <article class="process-card">
         <span class="process-number">03</span>
         <div class="process-icon">✓</div>
-        <h3>Xác nhận</h3>
-        <p>Theo dõi trạng thái đơn đặt, dịch vụ đi kèm và thanh toán.</p>
+        <h3>Xác nhận và theo dõi</h3>
+        <p>Quản lý trạng thái đơn, dịch vụ đi kèm và hóa đơn ngay trong tài khoản.</p>
       </article>
+    </div>
+
+    <div class="value-grid" aria-label="Giá trị của hệ thống">
+      <article class="value-card"><span>↗</span><h3>Ít thao tác hơn</h3><p>Các màn hình tập trung vào hành động chính, hạn chế bước dư thừa trong quá trình đặt sân.</p></article>
+      <article class="value-card"><span>◎</span><h3>Thông tin nhất quán</h3><p>Giá, trạng thái lịch và hóa đơn được hiển thị xuyên suốt để người dùng dễ kiểm tra.</p></article>
+      <article class="value-card"><span>⌘</span><h3>Quản lý theo vai trò</h3><p>Mỗi tài khoản chỉ nhìn thấy đúng chức năng cần thiết cho khách hàng, chủ sân hoặc quản trị viên.</p></article>
     </div>
   </div>
 </section>
@@ -109,9 +136,9 @@
 <section class="section cta-section">
   <div class="container cta-card">
     <div>
-      <span class="section-kicker section-kicker-light">Sẵn sàng ra sân?</span>
-      <h2>Tìm sân bóng phù hợp cho đội của bạn</h2>
-      <p>Bắt đầu bằng danh sách các sân đang hoạt động trong hệ thống.</p>
+      <span class="section-kicker section-kicker-light">Sẵn sàng cho trận tiếp theo?</span>
+      <h2>Tìm một khung giờ đẹp cho đội của bạn.</h2>
+      <p>Duyệt danh sách sân, kiểm tra lịch trống và hoàn tất đặt sân chỉ trong vài bước.</p>
     </div>
     <a class="button button-light" href="/san-bong">Khám phá sân bóng</a>
   </div>

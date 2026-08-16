@@ -1,45 +1,58 @@
-<section class="page-hero owner-hero">
+<section class="page-hero owner-hero owner-hero-v2">
   <div class="container page-hero-inner">
     <div>
       <span class="section-kicker section-kicker-light">Khu vực chủ sân</span>
       <h1>Xin chào, <%= owner.fullName %></h1>
-      <p>Theo dõi sân bóng và các đơn cần xử lý từ một dashboard duy nhất.</p>
+      <p>Theo dõi sân, lịch đặt và doanh thu quan trọng từ một dashboard duy nhất.</p>
     </div>
-    <a class="button button-light" href="/chu-san/san-bong/them">+ Thêm sân mới</a>
+    <a class="button button-light owner-hero-action" href="/chu-san/san-bong/them">+ Thêm sân mới</a>
   </div>
 </section>
 
-<section class="section owner-dashboard-section">
+<section class="section owner-dashboard-section owner-dashboard-v2">
   <div class="container">
-    <div class="owner-stat-grid">
-      <article class="owner-stat-card">
+    <div class="dashboard-section-heading">
+      <div>
+        <span class="section-kicker">Tổng quan vận hành</span>
+        <h2>Tình hình hôm nay</h2>
+      </div>
+      <span class="dashboard-date-note">Dữ liệu cập nhật theo hệ thống</span>
+    </div>
+
+    <div class="owner-stat-grid owner-stat-grid-v2">
+      <article class="owner-stat-card owner-stat-card-v2">
+        <div class="metric-card-top"><span class="metric-icon metric-icon-green"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="M12 5v14"></path><circle cx="12" cy="12" r="2.5"></circle></svg></span><span class="metric-trend">Sân bóng</span></div>
         <span>Tổng số sân</span>
         <strong><%= stats.totalPitches %></strong>
         <small><%= stats.activePitches %> sân đang hoạt động</small>
       </article>
-      <article class="owner-stat-card owner-stat-warning">
+      <article class="owner-stat-card owner-stat-card-v2 owner-stat-warning">
+        <div class="metric-card-top"><span class="metric-icon metric-icon-amber"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"></circle><path d="M12 7.5V12l3 2"></path></svg></span><span class="metric-trend">Cần xử lý</span></div>
         <span>Chờ xác nhận</span>
         <strong><%= stats.pendingBookings %></strong>
         <small>Đơn tương lai cần xử lý</small>
       </article>
-      <article class="owner-stat-card">
+      <article class="owner-stat-card owner-stat-card-v2">
+        <div class="metric-card-top"><span class="metric-icon metric-icon-blue"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="5" width="16" height="15" rx="2"></rect><path d="M8 3v4M16 3v4M4 9h16"></path></svg></span><span class="metric-trend">Trong ngày</span></div>
         <span>Lịch hôm nay</span>
         <strong><%= stats.todayBookings %></strong>
         <small>Không tính đơn đã hủy</small>
       </article>
-      <article class="owner-stat-card">
+      <article class="owner-stat-card owner-stat-card-v2 owner-stat-revenue">
+        <div class="metric-card-top"><span class="metric-icon metric-icon-light"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7.5h15a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-11a2 2 0 0 1 2-2h12"></path><path d="M16 12h5v4h-5a2 2 0 0 1 0-4Z"></path></svg></span><span class="metric-trend">Doanh thu</span></div>
         <span>Đã thanh toán</span>
         <strong><%= formatMoney(stats.paidRevenue) %></strong>
-        <small>Doanh thu ghi nhận trong hệ thống</small>
+        <small>Doanh thu đã ghi nhận</small>
       </article>
     </div>
 
-    <div class="owner-dashboard-grid">
-      <article class="owner-panel">
+    <div class="owner-dashboard-grid owner-dashboard-grid-v2">
+      <article class="owner-panel owner-panel-v2">
         <div class="owner-panel-heading">
           <div>
             <span class="section-kicker">Lịch sắp tới</span>
             <h2>Đơn đặt sân gần nhất</h2>
+            <p class="panel-description">Ưu tiên các đơn sắp diễn ra để xử lý nhanh trạng thái xác nhận.</p>
           </div>
           <a class="text-link" href="/chu-san/don-dat-san">Xem tất cả →</a>
         </div>
@@ -50,8 +63,8 @@
             <p>Các đơn tương lai sẽ xuất hiện tại đây.</p>
           </div>
         <% } else { %>
-          <div class="owner-booking-table-wrap">
-            <table class="owner-table">
+          <div class="owner-booking-table-wrap dashboard-table-wrap">
+            <table class="owner-table dashboard-table">
               <thead>
                 <tr>
                   <th>Mã đơn</th>
@@ -65,12 +78,12 @@
               <tbody>
                 <% recentBookings.forEach((booking) => { %>
                   <tr>
-                    <td><strong><%= booking.ma_dat_san %></strong></td>
-                    <td><%= booking.ten_san %></td>
+                    <td><strong class="table-code"><%= booking.ma_dat_san %></strong></td>
+                    <td><strong><%= booking.ten_san %></strong></td>
                     <td><%= booking.ten_khach_hang %></td>
                     <td><%= booking.ngay_dat_label %><br><small><%= booking.timeLabel %></small></td>
                     <td><span class="booking-status-badge <%= booking.bookingStatus.className %>"><%= booking.bookingStatus.label %></span></td>
-                    <td><a class="text-link" href="/chu-san/don-dat-san/<%= encodeURIComponent(booking.ma_dat_san) %>">Chi tiết</a></td>
+                    <td><a class="table-action-link" href="/chu-san/don-dat-san/<%= encodeURIComponent(booking.ma_dat_san) %>">Chi tiết</a></td>
                   </tr>
                 <% }) %>
               </tbody>
@@ -79,16 +92,19 @@
         <% } %>
       </article>
 
-      <aside class="owner-panel owner-quick-panel">
+      <aside class="owner-panel owner-panel-v2 owner-quick-panel owner-quick-panel-v2">
         <span class="section-kicker">Quản lý nhanh</span>
         <h2>Tình trạng sân</h2>
-        <div class="owner-status-summary">
+        <p class="panel-description">Tổng hợp trạng thái các sân thuộc tài khoản của bạn.</p>
+        <div class="owner-status-summary owner-status-summary-v2">
           <div><span class="status-dot status-dot-active"></span><span>Hoạt động</span><strong><%= statusCounts['Hoat dong'] %></strong></div>
           <div><span class="status-dot status-dot-maintenance"></span><span>Bảo trì</span><strong><%= statusCounts['Bao tri'] %></strong></div>
           <div><span class="status-dot status-dot-inactive"></span><span>Ngừng hoạt động</span><strong><%= statusCounts['Ngung hoat dong'] %></strong></div>
         </div>
-        <a class="button button-primary button-block" href="/chu-san/san-bong">Quản lý sân bóng</a>
-        <a class="button button-outline button-block" href="/chu-san/don-dat-san?status=pending">Xử lý đơn chờ xác nhận</a>
+        <div class="owner-quick-actions">
+          <a class="button button-primary button-block" href="/chu-san/san-bong">Quản lý sân bóng</a>
+          <a class="button button-outline button-block" href="/chu-san/don-dat-san?status=pending">Xử lý đơn chờ xác nhận</a>
+        </div>
       </aside>
     </div>
   </div>

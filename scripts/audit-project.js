@@ -23,6 +23,7 @@ function walk(directory, extensions = null) {
 
 const requiredFinalFiles = [
   'VERSION',
+  'public/css/ui-v3.css',
   'CHANGELOG.md',
   'README.md',
   'docs/API.md',
@@ -31,7 +32,10 @@ const requiredFinalFiles = [
   'docs/Deployment.md',
   'docs/TestPlan.md',
   'docs/Security.md',
-  'docs/Part09-Finalization.md',
+  'docs/UIUX.md',
+  'docs/README.md',
+  'docs/screenshots/README.md',
+  'public/css/ui-v1.css',
   'diagrams/ERD.png',
   'diagrams/UseCase.png',
   'diagrams/Architecture.png',
@@ -51,11 +55,15 @@ requiredFinalFiles.forEach((file) => { if (!exists(file)) fail(`Thiếu file fin
 
 const packageJson = JSON.parse(read('package.json'));
 const version = read('VERSION').trim();
-if (version !== '0.9.0') fail(`VERSION final phải là 0.9.0, hiện tại ${version}`);
+if (version !== '1.0.4') fail(`VERSION portfolio phải là 1.0.4, hiện tại ${version}`);
 if (packageJson.version !== version) fail('package.json version không khớp VERSION.');
 for (const scriptName of ['verify', 'audit', 'test', 'check', 'db:check']) {
   if (!packageJson.scripts?.[scriptName]) fail(`package.json thiếu script ${scriptName}`);
 }
+
+
+const layoutSource = read('views/layouts/main.ejs');
+if (!layoutSource.includes('/css/ui-v1.css')) fail('Layout chưa load ui-v1.css.');
 
 const appSource = read('src/app.js');
 for (const expected of [
@@ -147,4 +155,4 @@ if (failures.length) {
 
 console.log(`[AUDIT] FootballBookingSystem v${version}`);
 console.log(`[AUDIT] Đã kiểm tra ${views.length} view EJS, ${repositoryFiles.length} repository và ${allSource.length} file nguồn.`);
-console.log('[AUDIT] CSRF form, security headers, secret hygiene, kiến trúc tầng và artifact cuối: đạt.');
+console.log('[AUDIT] CSRF form, security headers, secret hygiene, kiến trúc tầng và artifact portfolio: đạt.');

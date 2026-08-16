@@ -1,76 +1,108 @@
-<section class="page-hero account-hero">
+<section class="page-hero account-hero account-hero-v2">
   <div class="container page-hero-inner">
     <div>
       <span class="section-kicker section-kicker-light">Tài khoản đang đăng nhập</span>
       <h1>Xin chào, <%= user.fullName %></h1>
-      <p>Phiên đăng nhập được lưu trên PostgreSQL và tự hết hạn sau thời gian cấu hình.</p>
+      <p>Thông tin tài khoản, vai trò và các lối tắt thường dùng được gom lại trong một màn hình.</p>
     </div>
-    <div class="account-avatar" aria-hidden="true">
+    <div class="account-avatar account-avatar-v2" aria-hidden="true">
       <%= user.fullName ? user.fullName.charAt(0).toUpperCase() : 'U' %>
     </div>
   </div>
 </section>
 
 <section class="section account-section">
-  <div class="container account-layout">
-    <article class="account-card">
-      <div class="account-card-heading">
-        <div>
-          <span class="section-kicker">Thông tin cá nhân</span>
-          <h2>Hồ sơ tài khoản</h2>
-        </div>
-        <span class="role-badge"><%= user.roleLabel %></span>
+  <div class="container">
+    <div class="account-overview-strip" aria-label="Tóm tắt tài khoản">
+      <div>
+        <span class="account-overview-icon" aria-hidden="true">✓</span>
+        <span><small>Trạng thái</small><strong>Đang hoạt động</strong></span>
       </div>
+      <div>
+        <span class="account-overview-icon" aria-hidden="true">◎</span>
+        <span><small>Vai trò</small><strong><%= user.roleLabel %></strong></span>
+      </div>
+      <div>
+        <span class="account-overview-icon" aria-hidden="true">#</span>
+        <span><small>Hồ sơ liên kết</small><strong><%= user.customerId || user.ownerId || user.accountId %></strong></span>
+      </div>
+    </div>
 
-      <dl class="account-details">
-        <div>
-          <dt>Mã tài khoản</dt>
-          <dd><%= user.accountId %></dd>
-        </div>
-        <div>
-          <dt>Tên đăng nhập</dt>
-          <dd><%= user.username %></dd>
-        </div>
-        <div>
-          <dt>Họ và tên</dt>
-          <dd><%= user.fullName %></dd>
-        </div>
-        <div>
-          <dt>Số điện thoại</dt>
-          <dd><%= user.phone || 'Chưa cập nhật' %></dd>
-        </div>
-        <% if (user.customerId) { %>
+    <div class="account-layout account-layout-v2">
+      <article class="account-card account-card-v2">
+        <div class="account-card-heading">
           <div>
-            <dt>Mã khách hàng</dt>
-            <dd><%= user.customerId %></dd>
+            <span class="section-kicker">Thông tin cá nhân</span>
+            <h2>Hồ sơ tài khoản</h2>
           </div>
-        <% } %>
-        <% if (user.ownerId) { %>
-          <div>
-            <dt>Mã chủ sân</dt>
-            <dd><%= user.ownerId %></dd>
-          </div>
-        <% } %>
-      </dl>
-    </article>
+          <span class="role-badge"><span class="status-mini-dot"></span><%= user.roleLabel %></span>
+        </div>
 
-    <aside class="account-actions-card">
-      <h2>Chức năng tài khoản</h2>
-      <% if (user.role === 'Khach hang') { %>
-        <p>Quản lý các đơn đã tạo hoặc tiếp tục tìm sân phù hợp.</p>
-        <a class="button button-primary button-block" href="/lich-su-dat-san">Lịch sử đặt sân</a>
-      <% } else if (user.role === 'Chu san') { %>
-        <p>Quản lý sân bóng và xác nhận các đơn đặt sân thuộc tài khoản của bạn.</p>
-        <a class="button button-primary button-block" href="/chu-san">Mở dashboard chủ sân</a>
-      <% } else if (user.role === 'Admin') { %>
-        <p>Quản lý tài khoản, khu vực, giao dịch và báo cáo toàn hệ thống.</p>
-        <a class="button button-primary button-block" href="/admin">Mở dashboard quản trị</a>
-      <% } %>
-      <a class="button button-outline button-block" href="/san-bong">Tiếp tục tìm sân</a>
-      <form action="/dang-xuat" method="post">
-        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-        <button class="button button-ghost button-block" type="submit">Đăng xuất</button>
-      </form>
-    </aside>
+        <dl class="account-details account-details-v2">
+          <div>
+            <dt>Mã tài khoản</dt>
+            <dd><%= user.accountId %></dd>
+          </div>
+          <div>
+            <dt>Tên đăng nhập</dt>
+            <dd><%= user.username %></dd>
+          </div>
+          <div>
+            <dt>Họ và tên</dt>
+            <dd><%= user.fullName %></dd>
+          </div>
+          <div>
+            <dt>Số điện thoại</dt>
+            <dd><%= user.phone || 'Chưa cập nhật' %></dd>
+          </div>
+          <% if (user.customerId) { %>
+            <div>
+              <dt>Mã khách hàng</dt>
+              <dd><%= user.customerId %></dd>
+            </div>
+          <% } %>
+          <% if (user.ownerId) { %>
+            <div>
+              <dt>Mã chủ sân</dt>
+              <dd><%= user.ownerId %></dd>
+            </div>
+          <% } %>
+        </dl>
+      </article>
+
+      <aside class="account-actions-card account-actions-v2">
+        <div class="account-actions-heading">
+          <span class="section-kicker">Truy cập nhanh</span>
+          <h2>Chức năng tài khoản</h2>
+        </div>
+        <% if (user.role === 'Khach hang') { %>
+          <p>Theo dõi các lịch đã đặt hoặc quay lại danh sách sân để tạo lịch mới.</p>
+          <a class="account-action-link account-action-primary" href="/lich-su-dat-san">
+            <span class="account-action-icon" aria-hidden="true">↗</span>
+            <span><strong>Lịch sử đặt sân</strong><small>Xem trạng thái các đơn của bạn</small></span>
+          </a>
+        <% } else if (user.role === 'Chu san') { %>
+          <p>Quản lý sân bóng và các đơn cần xử lý thuộc tài khoản chủ sân.</p>
+          <a class="account-action-link account-action-primary" href="/chu-san">
+            <span class="account-action-icon" aria-hidden="true">↗</span>
+            <span><strong>Dashboard chủ sân</strong><small>Theo dõi sân và đơn đặt</small></span>
+          </a>
+        <% } else if (user.role === 'Admin') { %>
+          <p>Truy cập trung tâm quản trị để theo dõi vận hành toàn hệ thống.</p>
+          <a class="account-action-link account-action-primary" href="/admin">
+            <span class="account-action-icon" aria-hidden="true">↗</span>
+            <span><strong>Dashboard quản trị</strong><small>Mở trung tâm điều hành hệ thống</small></span>
+          </a>
+        <% } %>
+        <a class="account-action-link" href="/san-bong">
+          <span class="account-action-icon" aria-hidden="true">⌕</span>
+          <span><strong>Tiếp tục tìm sân</strong><small>Khám phá các sân đang hoạt động</small></span>
+        </a>
+        <form class="account-logout-form" action="/dang-xuat" method="post">
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+          <button class="button button-ghost button-block" type="submit">Đăng xuất</button>
+        </form>
+      </aside>
+    </div>
   </div>
 </section>

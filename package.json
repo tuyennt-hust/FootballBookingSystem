@@ -1,8 +1,8 @@
 {
   "name": "football-booking-system",
-  "version": "0.9.0",
+  "version": "1.0.4",
   "private": true,
-  "description": "He thong quan ly va dat san bong",
+  "description": "Role-based football pitch booking and management platform built with Node.js, Express, EJS and PostgreSQL",
   "main": "src/server.js",
   "scripts": {
     "start": "node src/server.js",

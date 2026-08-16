@@ -1,4 +1,11 @@
 (() => {
+  const header = document.querySelector('[data-header]');
+  if (header) {
+    const syncHeader = () => header.classList.toggle('is-scrolled', window.scrollY > 12);
+    syncHeader();
+    window.addEventListener('scroll', syncHeader, { passive: true });
+  }
+
   const toggle = document.querySelector('[data-nav-toggle]');
   const navigation = document.querySelector('[data-nav]');
 

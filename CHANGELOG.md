@@ -1,37 +1,64 @@
 # Changelog
 
-## 0.9.0 - Phần 9: Finalization
+## v1.0.4 - Portfolio repository cleanup
 
-- Audit toàn bộ kiến trúc và hoàn thiện module customer còn ở dạng khung.
-- Thêm security headers, CSP, body limit, no-store cho dữ liệu nhạy cảm và tắt `X-Powered-By`.
-- Loại bỏ inline JavaScript khỏi EJS để CSP chặt hơn.
-- Thêm skip-link, focus và reduced-motion accessibility.
-- Production bắt buộc session secret mạnh và DB password không rỗng.
-- Thêm `/api/auth/csrf` và `/api/customers/summary`.
-- Thêm `npm run audit`, `npm run check`, `npm run db:check`.
-- Bổ sung unit tests authentication, pitch, security và customer guard.
-- Thêm final database smoke test.
-- Hoàn thiện API, Database, User Guide, Deployment, Test Plan và Security docs.
-- Tạo ERD, Use Case, Architecture và Sequence Booking từ thiết kế cuối.
-- Không thêm dependency npm và không cần migration database.
+- Rewrote the root README for GitHub/portfolio presentation.
+- Added a concise technical documentation index.
+- Added a dedicated location and naming guide for future portfolio screenshots.
+- Replaced local database/session secrets in `.env.example` with explicit placeholders.
+- Removed internal implementation-phase and updater documentation from the portfolio repository.
+- Updated project verification/audit rules for the cleaned repository structure.
 
-## 0.8.0 - Phần 8: Quản trị viên
+## v1.0.3 - Render & responsive polish
 
-- Dashboard quản trị, quản lý tài khoản/khu vực.
-- Theo dõi sân, đơn, hóa đơn và báo cáo thống kê.
-- Thu hồi session khi khóa tài khoản.
+- Removed pitch-type labels drawn directly inside default SVG pitch images.
+- Repositioned pitch status badges to prevent overlap/cropping.
+- Reduced excessive spacing on the owner dashboard.
+- Improved the Admin secondary navigation while scrolling.
+- Fixed long revenue values overflowing Admin KPI cards.
+- Refined responsive behavior for KPI cards and booking history.
 
-## 0.7.0 - Phần 7: Dịch vụ và thanh toán
+## v1.0.2 - Dashboard & profile polish
 
-- Sửa validation giá thuê để giá tròn như 200000 hợp lệ.
-- Thêm dịch vụ, hóa đơn và thanh toán mô phỏng.
+- Removed auth placeholders and the registration security promo block.
+- Refined owner and Admin dashboards.
+- Standardized booking/payment/admin status badges.
+- Improved the account profile and responsive dashboard components.
 
-## 0.6.0 - Phần 6: Quản lý chủ sân
+## v1.0.1 - Auth UI refinement
 
-- Dashboard chủ sân, CRUD sân, upload ảnh, trạng thái sân, xác nhận booking.
-- Migration `001_add_pitch_image_url.sql`.
-- Nâng Multer 2.x.
+- Added a real stadium visual to authentication pages.
+- Removed demo-account credentials from the sign-in UI.
+- Refined auth spacing, typography, and responsive presentation.
 
-## 0.5.0 - Phần 5: Luồng đặt sân
+## v1.0.0 - UI/UX portfolio release
 
-- Tạo, xem, hủy booking và lịch sử đặt sân.
+- Added the portfolio design system in `public/css/ui-v1.css`.
+- Refined home, pitch discovery, booking, payment, owner, and Admin interfaces.
+- Improved responsive behavior, interaction states, typography, spacing, and accessibility.
+
+## v0.9.0 - System finalization
+
+- Completed layered application modules and customer flows.
+- Added CSP/security headers, CSRF hardening, request limits, and private-page cache controls.
+- Added project verify/audit/database checks and final smoke tests.
+- Completed API, database, security, deployment, test, and user documentation.
+- Added ERD, Use Case, Architecture, and Booking Sequence diagrams.
+
+## v0.8.0 - Admin
+
+- Added Admin dashboard, account/area management, global monitoring, and reports.
+
+## v0.7.0 - Services and payment
+
+- Added booking services, invoice detail, and simulated payment flow.
+- Fixed pitch price validation for round values such as `200000`.
+
+## v0.6.0 - Pitch owner management
+
+- Added owner dashboard, pitch management, image upload, status management, and booking confirmation.
+- Added `001_add_pitch_image_url.sql` migration and Multer 2.x.
+
+## v0.5.0 - Booking flow
+
+- Added booking creation, history, detail, and cancellation workflows.
